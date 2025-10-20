@@ -1,83 +1,109 @@
+import { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
-import { Dumbbell, Waves, Trophy, Volleyball, Activity, Zap } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Trophy, Home, Wine } from "lucide-react";
+import ReservationModal from "./ReservationModal";
 
 const Activities = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedActivity, setSelectedActivity] = useState("");
+
   const activities = [
     {
       icon: Trophy,
-      title: "Fútbol",
-      description: "Canchas de fútbol 5 y 7 con césped sintético de última generación.",
+      title: "Cancha fútbol 5",
+      description: "Canchas de fútbol 5 con césped sintético de última generación y excelente iluminación.",
       color: "text-primary",
     },
     {
-      icon: Activity,
-      title: "Pádel",
-      description: "Canchas profesionales sobre alfombra y cemento con iluminación LED.",
+      icon: Trophy,
+      title: "Pádel sobre alfombra",
+      description: "Canchas de pádel con superficie de alfombra sintética, ideales para un juego profesional.",
       color: "text-primary",
     },
     {
-      icon: Zap,
-      title: "Tenis",
-      description: "Canchas de polvo de ladrillo mantenidas según estándares profesionales.",
+      icon: Trophy,
+      title: "Pádel sobre cemento",
+      description: "Canchas de pádel con superficie de cemento, perfectas para entrenamientos intensivos.",
       color: "text-primary",
     },
     {
-      icon: Waves,
-      title: "Natación",
-      description: "Pileta olímpica climatizada con clases para todas las edades.",
+      icon: Trophy,
+      title: "Tenis sobre polvo de ladrillo",
+      description: "Canchas de tenis profesionales con polvo de ladrillo mantenidas según estándares internacionales.",
       color: "text-primary",
     },
     {
-      icon: Dumbbell,
-      title: "Gimnasio",
-      description: "Equipamiento de última tecnología y profesores especializados.",
+      icon: Home,
+      title: "Salón",
+      description: "Salón equipado para eventos. Para casamientos o cumpleaños de quince, comunicarse con la Secretaría.",
       color: "text-primary",
     },
     {
-      icon: Volleyball,
-      title: "Hockey",
-      description: "Canchas reglamentarias y escuelita de hockey para niños y niñas.",
+      icon: Wine,
+      title: "Quincho",
+      description: "Quincho con parrilla para eventos familiares. Para casamientos o cumpleaños de quince, comunicarse con la Secretaría.",
       color: "text-primary",
     },
   ];
 
-  return (
-    <section id="actividades" className="py-20 md:py-32 bg-background">
-      <div className="container mx-auto px-4">
-        <div className="text-center mb-16 animate-fade-in-up">
-          <h2 className="font-montserrat font-bold text-4xl md:text-6xl text-foreground mb-6">
-            Nuestras Actividades
-          </h2>
-          <div className="w-24 h-1 bg-primary mx-auto mb-8" />
-          <p className="font-inter text-lg text-muted-foreground max-w-2xl mx-auto">
-            Ofrecemos una amplia variedad de disciplinas deportivas para toda la
-            familia
-          </p>
-        </div>
+  const handleReserve = (activityTitle: string) => {
+    setSelectedActivity(activityTitle);
+    setIsModalOpen(true);
+  };
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {activities.map((activity, index) => (
-            <Card
-              key={activity.title}
-              className="group hover:shadow-[var(--shadow-hover)] transition-all duration-300 hover:-translate-y-2 animate-fade-in-up cursor-pointer border-2 hover:border-primary/30"
-              style={{ animationDelay: `${index * 100}ms` }}
-            >
-              <CardContent className="p-8">
-                <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-primary/10 mb-6 group-hover:scale-110 group-hover:bg-primary/20 transition-all duration-300">
-                  <activity.icon className={activity.color} size={32} />
-                </div>
-                <h3 className="font-montserrat font-bold text-2xl text-foreground mb-4 group-hover:text-primary transition-colors">
-                  {activity.title}
-                </h3>
-                <p className="font-inter text-muted-foreground leading-relaxed">
-                  {activity.description}
-                </p>
-              </CardContent>
-            </Card>
-          ))}
+  return (
+    <>
+      <section id="actividades" className="py-20 md:py-32 bg-background">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-16 animate-fade-in-up">
+            <h2 className="font-montserrat font-bold text-4xl md:text-6xl text-foreground mb-6">
+              Nuestras Actividades
+            </h2>
+            <div className="w-24 h-1 bg-primary mx-auto mb-8" />
+            <p className="font-inter text-lg text-muted-foreground max-w-2xl mx-auto">
+              Seleccioná actividad, día y hora. Una vez abonada, deberás adjuntar
+              el comprobante del pago en el apartado "Mis reservas". Tendrás 30
+              minutos para hacerlo.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {activities.map((activity, index) => (
+              <Card
+                key={activity.title}
+                className="group hover:shadow-[var(--shadow-hover)] transition-all duration-300 hover:-translate-y-2 animate-fade-in-up border-2 hover:border-primary/30"
+                style={{ animationDelay: `${index * 100}ms` }}
+              >
+                <CardContent className="p-8">
+                  <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-primary/10 mb-6 group-hover:scale-110 group-hover:bg-primary/20 transition-all duration-300">
+                    <activity.icon className={activity.color} size={32} />
+                  </div>
+                  <h3 className="font-montserrat font-bold text-2xl text-foreground mb-4 group-hover:text-primary transition-colors">
+                    {activity.title}
+                  </h3>
+                  <p className="font-inter text-muted-foreground leading-relaxed mb-6">
+                    {activity.description}
+                  </p>
+                  <Button
+                    onClick={() => handleReserve(activity.title)}
+                    className="w-full bg-primary hover:bg-primary/90 font-montserrat font-semibold"
+                  >
+                    Reservar Ahora
+                  </Button>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+
+      <ReservationModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        activityTitle={selectedActivity}
+      />
+    </>
   );
 };
 
