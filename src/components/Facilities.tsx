@@ -3,9 +3,11 @@ import tennisImg from "@/assets/tennis.jpg";
 import padelImg from "@/assets/padel.jpg";
 import poolImg from "@/assets/pool.jpg";
 import gymImg from "@/assets/gym.jpg";
+import { useInView } from "@/hooks/use-in-view";
 
 const Facilities = () => {
   const [activeImage, setActiveImage] = useState(0);
+  const { ref, isInView } = useInView();
 
   const facilities = [
     {
@@ -31,9 +33,9 @@ const Facilities = () => {
   ];
 
   return (
-    <section id="instalaciones" className="py-20 md:py-32 bg-muted/30">
+    <section id="instalaciones" className="py-20 md:py-32 bg-muted/30" ref={ref}>
       <div className="container mx-auto px-4">
-        <div className="text-center mb-16 animate-fade-in-up">
+        <div className={`text-center mb-16 transition-all duration-700 ${isInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
           <h2 className="font-montserrat font-bold text-4xl md:text-6xl text-foreground mb-6">
             Nuestras Instalaciones
           </h2>
@@ -44,7 +46,7 @@ const Facilities = () => {
         </div>
 
         <div className="grid lg:grid-cols-2 gap-8 items-center">
-          <div className="relative h-[500px] rounded-2xl overflow-hidden shadow-[var(--shadow-elegant)] animate-fade-in">
+          <div className={`relative h-[500px] rounded-2xl overflow-hidden shadow-[var(--shadow-elegant)] transition-all duration-1000 delay-300 ${isInView ? 'opacity-100 -translate-x-0' : 'opacity-0 -translate-x-10'}`}>
             <img
               src={facilities[activeImage].image}
               alt={facilities[activeImage].title}
@@ -65,12 +67,16 @@ const Facilities = () => {
             {facilities.map((facility, index) => (
               <div
                 key={facility.title}
-                className={`relative h-48 rounded-xl overflow-hidden cursor-pointer transition-all duration-300 animate-scale-in ${
+                className={`relative h-48 rounded-xl overflow-hidden cursor-pointer transition-all duration-700 ${
                   activeImage === index
                     ? "ring-4 ring-primary scale-105 shadow-[var(--shadow-hover)]"
                     : "hover:scale-105 shadow-[var(--shadow-elegant)]"
                 }`}
-                style={{ animationDelay: `${index * 100}ms` }}
+                style={{ 
+                  transitionDelay: `${300 + index * 100}ms`,
+                  opacity: isInView ? 1 : 0,
+                  transform: isInView ? 'translateX(0) scale(1)' : 'translateX(40px) scale(0.9)'
+                }}
                 onClick={() => setActiveImage(index)}
               >
                 <img

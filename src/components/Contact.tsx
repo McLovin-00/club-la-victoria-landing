@@ -6,6 +6,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { MapPin, Phone, Mail } from "lucide-react";
 import { toast } from "sonner";
 import { z } from "zod";
+import { useInView } from "@/hooks/use-in-view";
 
 const contactSchema = z.object({
   name: z.string().trim().min(1, "El nombre es requerido").max(100, "El nombre debe tener menos de 100 caracteres"),
@@ -20,6 +21,7 @@ const Contact = () => {
     message: "",
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const { ref, isInView } = useInView();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -51,9 +53,9 @@ const Contact = () => {
   };
 
   return (
-    <section id="contacto" className="py-20 md:py-32 bg-background">
+    <section id="contacto" className="py-20 md:py-32 bg-background" ref={ref}>
       <div className="container mx-auto px-4">
-        <div className="text-center mb-16 animate-fade-in-up">
+        <div className={`text-center mb-16 transition-all duration-700 ${isInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
           <h2 className="font-montserrat font-bold text-4xl md:text-6xl text-foreground mb-6">
             Contactanos
           </h2>
@@ -65,7 +67,7 @@ const Contact = () => {
         </div>
 
         <div className="grid lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
-          <div className="space-y-8 animate-fade-in">
+          <div className={`space-y-8 transition-all duration-1000 delay-300 ${isInView ? 'opacity-100 -translate-x-0' : 'opacity-0 -translate-x-10'}`}>
             <Card className="border-2 hover:border-primary/30 transition-all">
               <CardContent className="p-6">
                 <div className="flex items-start gap-4">
@@ -136,7 +138,7 @@ const Contact = () => {
             </div>
           </div>
 
-          <div className="animate-fade-in" style={{ animationDelay: "200ms" }}>
+          <div className={`transition-all duration-1000 delay-500 ${isInView ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-10'}`}>
             <Card className="border-2">
               <CardContent className="p-8">
                 <form onSubmit={handleSubmit} className="space-y-6">

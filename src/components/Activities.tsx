@@ -3,10 +3,12 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Trophy, Home, Wine } from "lucide-react";
 import ReservationModal from "./ReservationModal";
+import { useInView } from "@/hooks/use-in-view";
 
 const Activities = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedActivity, setSelectedActivity] = useState("");
+  const { ref, isInView } = useInView();
 
   const activities = [
     {
@@ -54,9 +56,9 @@ const Activities = () => {
 
   return (
     <>
-      <section id="actividades" className="py-20 md:py-32 bg-background">
+      <section id="actividades" className="py-20 md:py-32 bg-background" ref={ref}>
         <div className="container mx-auto px-4">
-          <div className="text-center mb-16 animate-fade-in-up">
+          <div className={`text-center mb-16 transition-all duration-700 ${isInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
             <h2 className="font-montserrat font-bold text-4xl md:text-6xl text-foreground mb-6">
               Nuestras Actividades
             </h2>
@@ -72,8 +74,12 @@ const Activities = () => {
             {activities.map((activity, index) => (
               <Card
                 key={activity.title}
-                className="group hover:shadow-[var(--shadow-hover)] transition-all duration-300 hover:-translate-y-2 animate-fade-in-up border-2 hover:border-primary/30"
-                style={{ animationDelay: `${index * 100}ms` }}
+                className="group hover:shadow-[var(--shadow-hover)] transition-all duration-700 hover:-translate-y-2 border-2 hover:border-primary/30"
+                style={{ 
+                  transitionDelay: `${index * 100}ms`,
+                  opacity: isInView ? 1 : 0,
+                  transform: isInView ? 'translateY(0) scale(1)' : 'translateY(40px) scale(0.95)'
+                }}
               >
                 <CardContent className="p-8">
                   <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-primary/10 mb-6 group-hover:scale-110 group-hover:bg-primary/20 transition-all duration-300">

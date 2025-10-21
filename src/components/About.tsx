@@ -1,6 +1,8 @@
 import { Trophy, Users, Target } from "lucide-react";
+import { useInView } from "@/hooks/use-in-view";
 
 const About = () => {
+  const { ref, isInView } = useInView();
   const stats = [
     { icon: Trophy, value: "80+", label: "Años de Historia" },
     { icon: Users, value: "500+", label: "Socios Activos" },
@@ -8,9 +10,9 @@ const About = () => {
   ];
 
   return (
-    <section id="club" className="py-20 md:py-32 bg-muted/30">
+    <section id="club" className="py-20 md:py-32 bg-muted/30" ref={ref}>
       <div className="container mx-auto px-4">
-        <div className="text-center mb-16 animate-fade-in-up">
+        <div className={`text-center mb-16 transition-all duration-700 ${isInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
           <h2 className="font-montserrat font-bold text-4xl md:text-6xl text-foreground mb-6">
             Nuestra Historia
           </h2>
@@ -21,8 +23,12 @@ const About = () => {
           {stats.map((stat, index) => (
             <div
               key={stat.label}
-              className="text-center animate-fade-in-up"
-              style={{ animationDelay: `${index * 150}ms` }}
+              className={`text-center transition-all duration-700`}
+              style={{ 
+                transitionDelay: `${index * 150}ms`,
+                opacity: isInView ? 1 : 0,
+                transform: isInView ? 'translateY(0)' : 'translateY(40px)'
+              }}
             >
               <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-primary/10 mb-4 hover:scale-110 transition-transform">
                 <stat.icon className="text-primary" size={36} />
@@ -37,7 +43,7 @@ const About = () => {
           ))}
         </div>
 
-        <div className="max-w-4xl mx-auto space-y-6 animate-fade-in">
+        <div className={`max-w-4xl mx-auto space-y-6 transition-all duration-1000 delay-500 ${isInView ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-10'}`}>
           <p className="font-inter text-lg text-foreground/90 leading-relaxed">
             El Club de Cazadores "La Victoria" fue establecido el{" "}
             <span className="font-semibold text-primary">

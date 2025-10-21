@@ -10,8 +10,10 @@ import padelImg from "@/assets/padel.jpg";
 import poolImg from "@/assets/pool.jpg";
 import gymImg from "@/assets/gym.jpg";
 import heroBg from "@/assets/hero-bg.jpg";
+import { useInView } from "@/hooks/use-in-view";
 
 const Gallery = () => {
+  const { ref, isInView } = useInView();
   const images = [
     { src: heroBg, alt: "Instalaciones del Club La Victoria", title: "Nuestras Instalaciones" },
     { src: tennisImg, alt: "Cancha de Tenis", title: "Cancha de Tenis" },
@@ -21,9 +23,9 @@ const Gallery = () => {
   ];
 
   return (
-    <section id="galeria" className="py-20 bg-background">
+    <section id="galeria" className="py-20 bg-background" ref={ref}>
       <div className="container mx-auto px-4">
-        <div className="text-center mb-12 animate-fade-in">
+        <div className={`text-center mb-12 transition-all duration-700 ${isInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
           <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
             Galería de Fotos
           </h2>
@@ -37,7 +39,7 @@ const Gallery = () => {
             align: "start",
             loop: true,
           }}
-          className="w-full max-w-5xl mx-auto"
+          className={`w-full max-w-5xl mx-auto transition-all duration-1000 delay-300 ${isInView ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`}
         >
           <CarouselContent>
             {images.map((image, index) => (
