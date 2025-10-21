@@ -60,7 +60,7 @@ const Activities = () => {
         <div className="container mx-auto px-4">
           <div className={`text-center mb-16 transition-all duration-700 ${isInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
             <h2 className="font-montserrat font-bold text-4xl md:text-6xl text-foreground mb-6">
-              Nuestras Actividades
+              Reservá tu Cancha
             </h2>
             <div className="w-24 h-1 bg-primary mx-auto mb-8" />
             <p className="font-inter text-lg text-muted-foreground max-w-2xl mx-auto">

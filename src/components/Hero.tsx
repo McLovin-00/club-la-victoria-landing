@@ -44,6 +44,10 @@ const Hero = () => {
           <Button
             size="lg"
             className="bg-secondary hover:bg-secondary/90 text-white font-montserrat font-bold text-lg px-8 py-6 shadow-2xl"
+            onClick={() => {
+              const target = document.querySelector("#actividades");
+              if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
+            }}
           >
             Reservar Ahora
           </Button>
@@ -51,6 +55,10 @@ const Hero = () => {
             size="lg"
             variant="outline"
             className="border-2 border-white text-white hover:bg-white hover:text-primary font-montserrat font-bold text-lg px-8 py-6 shadow-2xl backdrop-blur-sm bg-white/10"
+            onClick={() => {
+              const target = document.querySelector("#club");
+              if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
+            }}
           >
             Conocer Más
           </Button>
@@ -60,6 +68,11 @@ const Hero = () => {
       <a
         href="#club"
         className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce text-white cursor-pointer"
+        onClick={(e) => {
+          e.preventDefault();
+          const target = document.querySelector("#club");
+          if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
+        }}
       >
         <ChevronDown size={40} />
       </a>
