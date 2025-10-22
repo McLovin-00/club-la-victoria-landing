@@ -49,31 +49,38 @@ const Facilities = () => {
   ];
 
   return (
-    <section id="instalaciones" className="py-20 md:py-32 bg-muted/30" ref={ref}>
-      <div className="container mx-auto px-4">
+    <section id="instalaciones" className="py-20 md:py-32 bg-gradient-to-b from-muted/30 to-background relative overflow-hidden" ref={ref}>
+      {/* Decorative gradient orbs */}
+      <div className="absolute top-20 left-10 w-72 h-72 bg-primary/10 rounded-full blur-3xl animate-pulse" />
+      <div className="absolute bottom-20 right-10 w-96 h-96 bg-secondary/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
+      
+      <div className="container mx-auto px-4 relative z-10">
         <div className={`text-center mb-16 transition-all duration-700 ${isInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
           <h2 className="font-montserrat font-bold text-4xl md:text-6xl text-foreground mb-6">
             Instalaciones y Galería
           </h2>
-          <div className="w-24 h-1 bg-primary mx-auto mb-8" />
+          <div className="w-24 h-1.5 bg-gradient-to-r from-primary to-secondary mx-auto mb-8 rounded-full" />
           <p className="font-inter text-lg text-muted-foreground max-w-2xl mx-auto">
             Instalaciones de primer nivel para tu desarrollo deportivo
           </p>
         </div>
 
         <div className="grid lg:grid-cols-2 gap-8 items-center mb-20">
-          <div className={`relative h-[500px] rounded-2xl overflow-hidden shadow-[var(--shadow-elegant)] transition-all duration-1000 delay-300 ${isInView ? 'opacity-100 -translate-x-0' : 'opacity-0 -translate-x-10'}`}>
+          <div className={`relative h-[500px] rounded-3xl overflow-hidden shadow-2xl border-4 border-card transition-all duration-1000 delay-300 group ${isInView ? 'opacity-100 -translate-x-0' : 'opacity-0 -translate-x-10'}`}>
             <img
               src={facilities[activeImage].image}
               alt={facilities[activeImage].title}
-              className="w-full h-full object-cover transition-all duration-500"
+              className="w-full h-full object-cover transition-all duration-700 group-hover:scale-110"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-            <div className="absolute bottom-0 left-0 right-0 p-8 text-white">
-              <h3 className="font-montserrat font-bold text-3xl mb-2">
+            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+            <div className="absolute top-4 right-4 bg-primary/90 backdrop-blur-sm px-4 py-2 rounded-full">
+              <span className="text-white font-montserrat font-bold text-sm">{activeImage + 1} / {facilities.length}</span>
+            </div>
+            <div className="absolute bottom-0 left-0 right-0 p-8 text-white transform transition-transform duration-300 group-hover:translate-y-0 translate-y-2">
+              <h3 className="font-montserrat font-bold text-3xl mb-2 drop-shadow-lg">
                 {facilities[activeImage].title}
               </h3>
-              <p className="font-inter text-lg">
+              <p className="font-inter text-lg drop-shadow-md">
                 {facilities[activeImage].description}
               </p>
             </div>
@@ -83,10 +90,10 @@ const Facilities = () => {
             {facilities.map((facility, index) => (
               <div
                 key={facility.title}
-                className={`relative h-48 rounded-xl overflow-hidden cursor-pointer transition-all duration-700 ${
+                className={`group relative h-48 rounded-2xl overflow-hidden cursor-pointer transition-all duration-700 ${
                   activeImage === index
-                    ? "ring-4 ring-primary scale-105 shadow-[var(--shadow-hover)]"
-                    : "hover:scale-105 shadow-[var(--shadow-elegant)]"
+                    ? "ring-4 ring-primary scale-105 shadow-2xl"
+                    : "hover:scale-105 shadow-xl hover:shadow-2xl"
                 }`}
                 style={{ 
                   transitionDelay: `${300 + index * 100}ms`,
@@ -98,11 +105,16 @@ const Facilities = () => {
                 <img
                   src={facility.image}
                   alt={facility.title}
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
-                <div className="absolute bottom-0 left-0 right-0 p-4 text-white">
-                  <h4 className="font-montserrat font-bold text-lg">
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
+                {activeImage === index && (
+                  <div className="absolute top-2 right-2 bg-primary rounded-full p-2 animate-scale-in">
+                    <div className="w-2 h-2 bg-white rounded-full animate-pulse" />
+                  </div>
+                )}
+                <div className="absolute bottom-0 left-0 right-0 p-4 text-white transform transition-transform duration-300 group-hover:translate-y-0 translate-y-1">
+                  <h4 className="font-montserrat font-bold text-lg drop-shadow-lg">
                     {facility.title}
                   </h4>
                 </div>

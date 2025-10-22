@@ -56,13 +56,17 @@ const Activities = () => {
 
   return (
     <>
-      <section id="actividades" className="py-20 md:py-32 bg-background" ref={ref}>
-        <div className="container mx-auto px-4">
+      <section id="actividades" className="py-20 md:py-32 bg-gradient-to-b from-background to-muted/20 relative overflow-hidden" ref={ref}>
+        {/* Animated background gradients */}
+        <div className="absolute top-1/4 right-0 w-96 h-96 bg-primary/10 rounded-full blur-3xl animate-pulse" style={{ animationDuration: '3s' }} />
+        <div className="absolute bottom-1/4 left-0 w-96 h-96 bg-secondary/10 rounded-full blur-3xl animate-pulse" style={{ animationDuration: '4s', animationDelay: '1s' }} />
+        
+        <div className="container mx-auto px-4 relative z-10">
           <div className={`text-center mb-16 transition-all duration-700 ${isInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
             <h2 className="font-montserrat font-bold text-4xl md:text-6xl text-foreground mb-6">
               Reservá tu Cancha
             </h2>
-            <div className="w-24 h-1 bg-primary mx-auto mb-8" />
+            <div className="w-24 h-1.5 bg-gradient-to-r from-primary to-secondary mx-auto mb-8 rounded-full" />
             <p className="font-inter text-lg text-muted-foreground max-w-2xl mx-auto">
               Seleccioná actividad, día y hora. Una vez abonada, deberás adjuntar
               el comprobante del pago en el apartado "Mis reservas". Tendrás 30
@@ -74,26 +78,29 @@ const Activities = () => {
             {activities.map((activity, index) => (
               <Card
                 key={activity.title}
-                className="group hover:shadow-[var(--shadow-hover)] transition-all duration-700 hover:-translate-y-2 border-2 hover:border-primary/30"
+                className="group hover:shadow-2xl transition-all duration-700 hover:-translate-y-3 border-2 hover:border-primary/50 bg-card/80 backdrop-blur-sm overflow-hidden relative"
                 style={{ 
                   transitionDelay: `${index * 100}ms`,
                   opacity: isInView ? 1 : 0,
                   transform: isInView ? 'translateY(0) scale(1)' : 'translateY(40px) scale(0.95)'
                 }}
               >
-                <CardContent className="p-8">
-                  <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-primary/10 mb-6 group-hover:scale-110 group-hover:bg-primary/20 transition-all duration-300">
-                    <activity.icon className={activity.color} size={32} />
+                {/* Gradient overlay on hover */}
+                <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-secondary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                
+                <CardContent className="p-8 relative z-10">
+                  <div className="inline-flex items-center justify-center w-20 h-20 rounded-3xl bg-gradient-to-br from-primary/20 to-primary/10 mb-6 group-hover:scale-110 group-hover:from-primary/30 group-hover:to-secondary/20 transition-all duration-300 shadow-lg">
+                    <activity.icon className={`${activity.color} group-hover:scale-110 transition-transform`} size={36} />
                   </div>
                   <h3 className="font-montserrat font-bold text-2xl text-foreground mb-4 group-hover:text-primary transition-colors">
                     {activity.title}
                   </h3>
-                  <p className="font-inter text-muted-foreground leading-relaxed mb-6">
+                  <p className="font-inter text-muted-foreground leading-relaxed mb-6 min-h-[80px]">
                     {activity.description}
                   </p>
                   <Button
                     onClick={() => handleReserve(activity.title)}
-                    className="w-full bg-primary hover:bg-primary/90 font-montserrat font-semibold"
+                    className="w-full bg-gradient-to-r from-primary to-primary/90 hover:from-primary/90 hover:to-secondary font-montserrat font-semibold shadow-md hover:shadow-lg transition-all duration-300"
                   >
                     Reservar Ahora
                   </Button>
