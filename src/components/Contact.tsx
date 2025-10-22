@@ -70,74 +70,75 @@ const Contact = () => {
           </p>
         </div>
 
-        {/* Info Cards */}
-        <div className={`grid md:grid-cols-3 gap-6 mb-12 transition-all duration-1000 delay-200 ${isInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-          <Card className="group border-2 hover:border-primary/50 transition-all duration-300 hover:shadow-xl hover:-translate-y-1 bg-card/80 backdrop-blur-sm">
-            <CardContent className="p-6">
-              <div className="flex flex-col items-center text-center gap-4">
-                <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-primary/20 to-primary/10 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                  <MapPin className="text-primary" size={32} />
+        {/* Info and Form Grid */}
+        <div className="grid lg:grid-cols-2 gap-12 mb-16 max-w-6xl mx-auto">
+          {/* Left Column - Contact Info Cards */}
+          <div className={`space-y-6 transition-all duration-1000 delay-200 ${isInView ? 'opacity-100 -translate-x-0' : 'opacity-0 -translate-x-10'}`}>
+            <Card className="group border-2 hover:border-primary/50 transition-all duration-300 hover:shadow-xl hover:-translate-y-1 bg-card/80 backdrop-blur-sm">
+              <CardContent className="p-6">
+                <div className="flex items-start gap-4">
+                  <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-primary/20 to-primary/10 flex items-center justify-center group-hover:scale-110 transition-transform duration-300 flex-shrink-0">
+                    <MapPin className="text-primary" size={28} />
+                  </div>
+                  <div>
+                    <h3 className="font-montserrat font-bold text-xl mb-2">
+                      Dirección
+                    </h3>
+                    <p className="font-inter text-muted-foreground">
+                      Dirección del Club
+                      <br />
+                      Ciudad, Provincia
+                    </p>
+                  </div>
                 </div>
-                <div>
-                  <h3 className="font-montserrat font-bold text-xl mb-2">
-                    Dirección
-                  </h3>
-                  <p className="font-inter text-muted-foreground">
-                    Dirección del Club
-                    <br />
-                    Ciudad, Provincia
-                  </p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
+              </CardContent>
+            </Card>
 
-          <Card className="group border-2 hover:border-primary/50 transition-all duration-300 hover:shadow-xl hover:-translate-y-1 bg-card/80 backdrop-blur-sm">
-            <CardContent className="p-6">
-              <div className="flex flex-col items-center text-center gap-4">
-                <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-primary/20 to-primary/10 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                  <Phone className="text-primary" size={32} />
+            <Card className="group border-2 hover:border-primary/50 transition-all duration-300 hover:shadow-xl hover:-translate-y-1 bg-card/80 backdrop-blur-sm">
+              <CardContent className="p-6">
+                <div className="flex items-start gap-4">
+                  <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-primary/20 to-primary/10 flex items-center justify-center group-hover:scale-110 transition-transform duration-300 flex-shrink-0">
+                    <Phone className="text-primary" size={28} />
+                  </div>
+                  <div>
+                    <h3 className="font-montserrat font-bold text-xl mb-2">
+                      Teléfono
+                    </h3>
+                    <p className="font-inter text-muted-foreground">
+                      +54 (XXX) XXX-XXXX
+                    </p>
+                  </div>
                 </div>
-                <div>
-                  <h3 className="font-montserrat font-bold text-xl mb-2">
-                    Teléfono
-                  </h3>
-                  <p className="font-inter text-muted-foreground">
-                    +54 (XXX) XXX-XXXX
-                  </p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
+              </CardContent>
+            </Card>
 
-          <Card className="group border-2 hover:border-primary/50 transition-all duration-300 hover:shadow-xl hover:-translate-y-1 bg-card/80 backdrop-blur-sm">
-            <CardContent className="p-6">
-              <div className="flex flex-col items-center text-center gap-4">
-                <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-primary/20 to-primary/10 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                  <Mail className="text-primary" size={32} />
+            <Card className="group border-2 hover:border-primary/50 transition-all duration-300 hover:shadow-xl hover:-translate-y-1 bg-card/80 backdrop-blur-sm">
+              <CardContent className="p-6">
+                <div className="flex items-start gap-4">
+                  <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-primary/20 to-primary/10 flex items-center justify-center group-hover:scale-110 transition-transform duration-300 flex-shrink-0">
+                    <Mail className="text-primary" size={28} />
+                  </div>
+                  <div>
+                    <h3 className="font-montserrat font-bold text-xl mb-2">
+                      Email
+                    </h3>
+                    <p className="font-inter text-muted-foreground">
+                      info@clublavictoria.com.ar
+                    </p>
+                  </div>
                 </div>
-                <div>
-                  <h3 className="font-montserrat font-bold text-xl mb-2">
-                    Email
-                  </h3>
-                  <p className="font-inter text-muted-foreground">
-                    info@clublavictoria.com.ar
-                  </p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
+              </CardContent>
+            </Card>
+          </div>
 
-        {/* Form */}
-        <div className={`max-w-3xl mx-auto mb-16 transition-all duration-1000 delay-400 ${isInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-          <Card className="border-2 shadow-2xl bg-card/80 backdrop-blur-sm">
-            <CardContent className="p-8 md:p-12">
-              <h3 className="font-montserrat font-bold text-2xl md:text-3xl text-center mb-8">
-                Envianos tu Consulta
-              </h3>
-              <form onSubmit={handleSubmit} className="space-y-6">
-                <div className="grid md:grid-cols-2 gap-6">
+          {/* Right Column - Contact Form */}
+          <div className={`transition-all duration-1000 delay-400 ${isInView ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-10'}`}>
+            <Card className="border-2 shadow-2xl bg-card/80 backdrop-blur-sm h-full">
+              <CardContent className="p-8">
+                <h3 className="font-montserrat font-bold text-2xl md:text-3xl text-center mb-8">
+                  Envianos tu Consulta
+                </h3>
+                <form onSubmit={handleSubmit} className="space-y-6">
                   <div>
                     <label
                       htmlFor="name"
@@ -181,41 +182,41 @@ const Contact = () => {
                       <p className="text-destructive text-sm mt-1 animate-fade-in">{errors.email}</p>
                     )}
                   </div>
-                </div>
 
-                <div>
-                  <label
-                    htmlFor="message"
-                    className="font-inter font-medium text-sm mb-2 block"
+                  <div>
+                    <label
+                      htmlFor="message"
+                      className="font-inter font-medium text-sm mb-2 block"
+                    >
+                      Mensaje *
+                    </label>
+                    <Textarea
+                      id="message"
+                      name="message"
+                      value={formData.message}
+                      onChange={handleChange}
+                      placeholder="Escribí tu consulta aquí..."
+                      rows={6}
+                      className={`transition-all ${errors.message ? "border-destructive" : "focus:border-primary"}`}
+                      maxLength={1000}
+                    />
+                    {errors.message && (
+                      <p className="text-destructive text-sm mt-1 animate-fade-in">
+                        {errors.message}
+                      </p>
+                    )}
+                  </div>
+
+                  <Button
+                    type="submit"
+                    className="w-full bg-gradient-to-r from-primary to-primary/90 hover:from-primary/90 hover:to-primary font-montserrat font-semibold text-lg py-6 shadow-lg hover:shadow-xl transition-all duration-300"
                   >
-                    Mensaje *
-                  </label>
-                  <Textarea
-                    id="message"
-                    name="message"
-                    value={formData.message}
-                    onChange={handleChange}
-                    placeholder="Escribí tu consulta aquí..."
-                    rows={6}
-                    className={`transition-all ${errors.message ? "border-destructive" : "focus:border-primary"}`}
-                    maxLength={1000}
-                  />
-                  {errors.message && (
-                    <p className="text-destructive text-sm mt-1 animate-fade-in">
-                      {errors.message}
-                    </p>
-                  )}
-                </div>
-
-                <Button
-                  type="submit"
-                  className="w-full bg-gradient-to-r from-primary to-primary/90 hover:from-primary/90 hover:to-primary font-montserrat font-semibold text-lg py-6 shadow-lg hover:shadow-xl transition-all duration-300"
-                >
-                  Enviar Mensaje
-                </Button>
-              </form>
-            </CardContent>
-          </Card>
+                    Enviar Mensaje
+                  </Button>
+                </form>
+              </CardContent>
+            </Card>
+          </div>
         </div>
 
         {/* Map - Full width at bottom */}
