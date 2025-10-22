@@ -85,9 +85,7 @@ const Contact = () => {
                       Dirección
                     </h3>
                     <p className="font-inter text-muted-foreground">
-                      Dirección del Club
-                      <br />
-                      Ciudad, Provincia
+                      Libertad 1212, Villa Eloísa, Santa Fe
                     </p>
                   </div>
                 </div>
@@ -224,7 +222,7 @@ const Contact = () => {
           <div className="rounded-3xl overflow-hidden shadow-2xl border-4 border-card h-96 md:h-[500px] relative group">
             <div className="absolute inset-0 bg-gradient-to-t from-primary/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none z-10" />
             <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3284.0168878925974!2d-58.38375908477031!3d-34.60373098045866!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzTCsDM2JzEzLjQiUyA1OMKwMjInNTYuMCJX!5e0!3m2!1ses-419!2sar!4v1234567890123!5m2!1ses-419!2sar"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3347.659539045054!2d-61.54432000033622!3d-32.95999709238338!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95c9c516b1555555%3A0xdfbc2836c5cdceb4!2sClub%20La%20Victoria!5e0!3m2!1ses-419!2sar!4v1704432166726!5m2!1ses-419!2sar"
               width="100%"
               height="100%"
               style={{ border: 0 }}

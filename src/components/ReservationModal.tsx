@@ -56,7 +56,7 @@ const ReservationModal = ({
       const res = await fetch(url, { method: "GET", headers: { Accept: "application/json" } });
 
       // Intentar leer JSON de respuesta aunque el status no sea 200
-      let data: any = undefined;
+      let data = undefined;
       try {
         data = await res.json();
       } catch (e) {
@@ -115,7 +115,7 @@ const ReservationModal = ({
 
   return (
     <Dialog open={isOpen} onOpenChange={handleClose}>
-      <DialogContent className="sm:max-w-md">
+      <DialogContent className="w-[97.5%] sm:max-w-md">
         <DialogHeader>
           <DialogTitle className="font-montserrat text-2xl">
             Reservar {activityTitle}

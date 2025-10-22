@@ -22,7 +22,7 @@ const Hero = () => {
           <img
             src={logo}
             alt="Escudo Club La Victoria"
-            className="mx-auto h-40 w-auto md:h-48 mb-8 animate-float drop-shadow-2xl"
+            className="mx-auto h-32 w-auto lg:h-40 mb-4 lg:mb-8 animate-float drop-shadow-2xl"
           />
         </div>
         
@@ -32,7 +32,7 @@ const Hero = () => {
           <span className="text-secondary">LA VICTORIA</span>
         </h1>
         
-        <p className="font-inter text-lg md:text-2xl text-white/95 mb-4 max-w-3xl mx-auto animate-fade-in drop-shadow-lg">
+        <p className="hidden sm:block font-inter text-lg md:text-2xl text-white/95 mb-4 max-w-3xl mx-auto animate-fade-in drop-shadow-lg">
           Entidad deportiva y social desde 1944
         </p>
         
