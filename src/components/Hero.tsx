@@ -22,7 +22,7 @@ const Hero = () => {
           <img
             src={logo}
             alt="Escudo Club La Victoria"
-            className="mx-auto h-32 w-32 mb-8 animate-float drop-shadow-2xl"
+            className="mx-auto h-40 w-auto md:h-48 mb-8 animate-float drop-shadow-2xl"
           />
         </div>
         

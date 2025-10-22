@@ -1,4 +1,5 @@
 import { MessageCircle } from "lucide-react";
+import { FaWhatsapp} from "react-icons/fa";
 
 const WhatsAppButton = () => {
   const handleClick = () => {
@@ -20,7 +21,8 @@ const WhatsAppButton = () => {
         
         {/* Main button */}
         <div className="relative w-16 h-16 bg-[#25D366] hover:bg-[#128C7E] rounded-full shadow-2xl flex items-center justify-center transition-all duration-300 group-hover:scale-110">
-          <MessageCircle className="text-white" size={32} />
+          {/* <MessageCircle className="text-white" size={32} /> */}
+          <FaWhatsapp className="text-white absolute inset-0 m-auto" size={40} />
         </div>
       </div>
       

@@ -27,7 +27,7 @@ const Footer = () => {
             </p>
             <div className="flex gap-4">
               <a
-                href="https://facebook.com"
+                href="https://www.facebook.com/profile.php?id=100071167026592"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="group w-11 h-11 rounded-xl bg-primary/20 backdrop-blur-sm flex items-center justify-center hover:bg-primary hover:scale-110 transition-all duration-300 shadow-md hover:shadow-lg"
@@ -35,7 +35,7 @@ const Footer = () => {
                 <Facebook size={22} className="group-hover:scale-110 transition-transform" />
               </a>
               <a
-                href="https://instagram.com"
+                href="https://www.instagram.com/clublavictoria_/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="group w-11 h-11 rounded-xl bg-primary/20 backdrop-blur-sm flex items-center justify-center hover:bg-primary hover:scale-110 transition-all duration-300 shadow-md hover:shadow-lg"
@@ -94,7 +94,7 @@ const Footer = () => {
             <ul className="space-y-4 font-inter">
               <li className="flex gap-3 text-background/80 group">
                 <MapPin size={20} className="text-primary flex-shrink-0 mt-1 group-hover:scale-110 transition-transform" />
-                <span className="group-hover:text-background transition-colors">Dirección del Club, Ciudad, Provincia</span>
+                <span className="group-hover:text-background transition-colors">Libertad 1212, Villa Eloísa, Santa Fe</span>
               </li>
               <li className="flex gap-3 text-background/80 group">
                 <Phone size={20} className="text-primary flex-shrink-0 group-hover:scale-110 transition-transform" />

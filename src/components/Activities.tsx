@@ -5,6 +5,14 @@ import { Trophy, Home, Wine } from "lucide-react";
 import ReservationModal from "./ReservationModal";
 import { useInView } from "@/hooks/use-in-view";
 
+// Importar imágenes para que Vite/Bun las procese
+import iconCanchaFutbol from "@/assets/actividades/icono-cancha-futbol-5-green.png";
+import iconCanchaPaddle1 from "@/assets/actividades/icono-cancha-paddle-green.png";
+import iconCanchaPaddle2 from "@/assets/actividades/icono-cancha-paddle-green.png";
+import iconCanchaTenis from "@/assets/actividades/icono-cancha-tenis-green.png";
+import iconSalon from "@/assets/actividades/icono-salon-green.png";
+import iconQuincho from "@/assets/actividades/icono-salon-green.png";
+
 const Activities = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedActivity, setSelectedActivity] = useState("");
@@ -12,37 +20,37 @@ const Activities = () => {
 
   const activities = [
     {
-      icon: Trophy,
+      icon: iconCanchaFutbol,
       title: "Cancha fútbol 5",
       description: "Canchas de fútbol 5 con césped sintético de última generación y excelente iluminación.",
       color: "text-primary",
     },
     {
-      icon: Trophy,
+      icon: iconCanchaPaddle1,
       title: "Pádel sobre alfombra",
       description: "Canchas de pádel con superficie de alfombra sintética, ideales para un juego profesional.",
       color: "text-primary",
     },
     {
-      icon: Trophy,
+      icon: iconCanchaPaddle2,
       title: "Pádel sobre cemento",
       description: "Canchas de pádel con superficie de cemento, perfectas para entrenamientos intensivos.",
       color: "text-primary",
     },
     {
-      icon: Trophy,
+      icon: iconCanchaTenis,
       title: "Tenis sobre polvo de ladrillo",
       description: "Canchas de tenis profesionales con polvo de ladrillo mantenidas según estándares internacionales.",
       color: "text-primary",
     },
     {
-      icon: Home,
+      icon: iconSalon,
       title: "Salón",
       description: "Salón equipado para eventos. Para casamientos o cumpleaños de quince, comunicarse con la Secretaría.",
       color: "text-primary",
     },
     {
-      icon: Wine,
+      icon: iconQuincho,
       title: "Quincho",
       description: "Quincho con parrilla para eventos familiares. Para casamientos o cumpleaños de quince, comunicarse con la Secretaría.",
       color: "text-primary",
@@ -90,7 +98,7 @@ const Activities = () => {
                 
                 <CardContent className="p-8 relative z-10">
                   <div className="inline-flex items-center justify-center w-20 h-20 rounded-3xl bg-gradient-to-br from-primary/20 to-primary/10 mb-6 group-hover:scale-110 group-hover:from-primary/30 group-hover:to-secondary/20 transition-all duration-300 shadow-lg">
-                    <activity.icon className={`${activity.color} group-hover:scale-110 transition-transform`} size={36} />
+                    <img src={activity.icon} alt={activity.title} className={`${activity.color} group-hover:scale-110 transition-transform w-14`} />
                   </div>
                   <h3 className="font-montserrat font-bold text-2xl text-foreground mb-4 group-hover:text-primary transition-colors">
                     {activity.title}

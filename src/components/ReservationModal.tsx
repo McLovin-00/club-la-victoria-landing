@@ -33,20 +33,68 @@ const ReservationModal = ({
 }: ReservationModalProps) => {
   const [dni, setDni] = useState("");
   const [error, setError] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    // Validación local con Zod
     try {
       dniSchema.parse({ dni });
       setError("");
-      toast.success(`Reserva iniciada para ${activityTitle}. DNI: ${dni}`);
-      setDni("");
-      onClose();
     } catch (err) {
       if (err instanceof z.ZodError) {
         setError(err.errors[0].message);
+        return;
       }
+    }
+
+    setIsSubmitting(true);
+    try {
+      const url = `https://www.api.clublavictoria.com.ar/api/v1/socios/reserva/${dni}`;
+      const res = await fetch(url, { method: "GET", headers: { Accept: "application/json" } });
+
+      // Intentar leer JSON de respuesta aunque el status no sea 200
+      let data: any = undefined;
+      try {
+        data = await res.json();
+      } catch (e) {
+        data = undefined;
+      }
+
+      // Log de depuración (útil para probar con 42533302)
+      // eslint-disable-next-line no-console
+      console.debug("[Reserva API] status:", res.status, "body:", data);
+
+      // Normalizar varias formas de 'true' que pueda devolver la API
+      const isTrue =
+        data === true ||
+        data === "true" ||
+        (typeof data === "object" && (
+          data.data === true ||
+          data.data === "true" ||
+          data.success === true ||
+          data.success === "true" ||
+          data.valid === true ||
+          data.valid === "true"
+        ));
+
+      if (isTrue) {
+        // Redirigir a la URL externa
+        window.location.href = "https://turnosconqr.com/club_la_victoria-prueba1";
+        return;
+      }
+
+      // Si la respuesta no indica que es miembro -> cerrar modal y mostrar toast
+      setDni("");
+      onClose();
+      toast.error("El DNI ingresado no está asociado al club.", { position: "top-center", duration: 5000 });
+      return;
+    } catch (err) {
+      setError("No se pudo conectar con el servidor. Intenta nuevamente.");
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -91,6 +139,7 @@ const ReservationModal = ({
               onChange={handleChange}
               placeholder="Ej: 12345678"
               className={error ? "border-destructive" : ""}
+              aria-invalid={!!error}
               maxLength={8}
               autoFocus
             />
@@ -104,15 +153,32 @@ const ReservationModal = ({
               type="button"
               variant="outline"
               onClick={handleClose}
-              className="flex-1 font-montserrat font-semibold"
+              className="flex-1 border-destructive text-destructive hover:bg-destructive hover:text-white font-montserrat font-semibold transition-colors"
             >
               Cancelar
             </Button>
             <Button
               type="submit"
-              className="flex-1 bg-primary hover:bg-primary/90 font-montserrat font-semibold"
+              className="flex-1 bg-primary hover:bg-primary/90 font-montserrat font-semibold flex items-center justify-center"
+              disabled={isSubmitting}
             >
-              Continuar
+              {isSubmitting ? (
+                <>
+                  <svg
+                    className="animate-spin h-5 w-5 mr-2 text-white"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    aria-hidden="true"
+                  >
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
+                  </svg>
+                  Cargando...
+                </>
+              ) : (
+                "Continuar"
+              )}
             </Button>
           </div>
         </form>
