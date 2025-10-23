@@ -70,7 +70,7 @@ const Navbar = () => {
               </a>
             ))}
             <Button
-              className="bg-primary hover:bg-primary/90 font-montserrat font-semibold"
+              className="bg-secondary hover:bg-secondary/90 text-white font-montserrat font-semibold shadow-lg"
               onClick={(e) => {
                 e.preventDefault();
                 const target = document.querySelector("#actividades");
@@ -104,7 +104,7 @@ const Navbar = () => {
               </a>
             ))}
             <Button
-              className="w-full mt-4 bg-primary hover:bg-primary/90 font-montserrat font-semibold"
+              className="w-full mt-4 bg-secondary hover:bg-secondary/90 text-white font-montserrat font-semibold shadow-lg"
               onClick={(e) => {
                 e.preventDefault();
                 const target = document.querySelector("#actividades");

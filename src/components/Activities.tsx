@@ -86,7 +86,7 @@ const Activities = () => {
             {activities.map((activity, index) => (
               <Card
                 key={activity.title}
-                className="group hover:shadow-2xl transition-all duration-700 hover:-translate-y-3 border-2 hover:border-primary/50 bg-card/80 backdrop-blur-sm overflow-hidden relative"
+                className="group hover:shadow-2xl hover:shadow-primary/20 transition-all duration-700 hover:-translate-y-3 border-2 hover:border-primary/50 bg-card/80 backdrop-blur-sm overflow-hidden relative"
                 style={{ 
                   transitionDelay: `${index * 100}ms`,
                   opacity: isInView ? 1 : 0,
@@ -97,7 +97,7 @@ const Activities = () => {
                 <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-secondary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                 
                 <CardContent className="p-8 relative z-10">
-                  <div className="inline-flex items-center justify-center w-20 h-20 rounded-3xl bg-gradient-to-br from-primary/20 to-primary/10 mb-6 group-hover:scale-110 group-hover:from-primary/30 group-hover:to-secondary/20 transition-all duration-300 shadow-lg">
+                  <div className="inline-flex items-center justify-center w-20 h-20 rounded-3xl bg-gradient-to-br from-primary/20 to-primary/10 mb-6 group-hover:scale-110 group-hover:rotate-3 group-hover:from-primary/30 group-hover:to-secondary/20 transition-all duration-500 shadow-lg">
                     <img src={activity.icon} alt={activity.title} className={`${activity.color} group-hover:scale-110 transition-transform w-14`} />
                   </div>
                   <h3 className="font-montserrat font-bold text-2xl text-foreground mb-4 group-hover:text-primary transition-colors">
