@@ -39,11 +39,11 @@ const QRModal = ({ isOpen, onClose }: QRModalProps) => {
 
       // Call API to verify DNI
       const response = await fetch(
-        `https://app.gestiondeportiva.com.ar/api/verificar_dni.php?dni=${validatedData.dni}`
+        `https://www.api.clublavictoria.com.ar/api/v1/socios/reserva/${validatedData.dni}`
       );
       const data = await response.json();
 
-      if (data.encontrado === true) {
+      if (data) {
         // Generate QR code with logo
         const qrData = `dni:${validatedData.dni}`;
         const logoUrl = encodeURIComponent("https://i.ibb.co/9yqvMc4/logo-fondo-limpio.png");
@@ -147,14 +147,14 @@ const QRModal = ({ isOpen, onClose }: QRModalProps) => {
                 variant="outline"
                 onClick={handleClose}
                 disabled={isSubmitting}
-                className="flex-1 font-montserrat"
+                className="flex-1 border-destructive text-destructive hover:bg-destructive hover:text-white font-montserrat font-semibold transition-colors"
               >
                 Cancelar
               </Button>
               <Button
                 type="submit"
                 disabled={isSubmitting || !dni}
-                className="flex-1 font-montserrat"
+                className="flex-1 bg-primary hover:bg-primary/90 font-montserrat font-semibold flex items-center justify-center"
               >
                 {isSubmitting ? (
                   <>
