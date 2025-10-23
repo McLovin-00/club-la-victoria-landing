@@ -18,6 +18,7 @@ const Navbar = () => {
     { name: "El Club", href: "#club" },
     { name: "Actividades", href: "#actividades" },
     { name: "Instalaciones", href: "#instalaciones" },
+    { name: "Merchandising", href: "#merchandising" },
     { name: "Contacto", href: "#contacto" },
   ];
 
