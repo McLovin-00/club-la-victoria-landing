@@ -1,11 +1,13 @@
 import { useState, useEffect } from "react";
-import { Menu, X } from "lucide-react";
+import { Menu, X, QrCode } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import logo from "@/assets/logo.png";
+import QRModal from "./QRModal";
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isQRModalOpen, setIsQRModalOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 20);
@@ -79,6 +81,17 @@ const Navbar = () => {
             >
               Reservar
             </Button>
+            <Button
+              variant="outline"
+              className="font-montserrat font-semibold border-2"
+              onClick={(e) => {
+                e.preventDefault();
+                setIsQRModalOpen(true);
+              }}
+            >
+              <QrCode className="mr-2 h-4 w-4" />
+              Generar QR
+            </Button>
           </div>
 
           <button
@@ -114,9 +127,25 @@ const Navbar = () => {
             >
               Reservar
             </Button>
+            <Button
+              variant="outline"
+              className="w-full mt-2 font-montserrat font-semibold border-2"
+              onClick={(e) => {
+                e.preventDefault();
+                setIsQRModalOpen(true);
+                setIsMobileMenuOpen(false);
+              }}
+            >
+              <QrCode className="mr-2 h-4 w-4" />
+              Generar QR
+            </Button>
           </div>
         )}
       </div>
+      <QRModal
+        isOpen={isQRModalOpen}
+        onClose={() => setIsQRModalOpen(false)}
+      />
     </nav>
   );
 };
