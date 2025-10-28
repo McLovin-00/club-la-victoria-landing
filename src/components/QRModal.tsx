@@ -26,6 +26,7 @@ const QRModal = ({ isOpen, onClose }: QRModalProps) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [qrGenerated, setQrGenerated] = useState(false);
   const [qrUrl, setQrUrl] = useState("");
+  const [isLoadingQR, setIsLoadingQR] = useState(false);
   const { toast } = useToast();
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -50,12 +51,8 @@ const QRModal = ({ isOpen, onClose }: QRModalProps) => {
         const qrApiUrl = `https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=${encodeURIComponent(qrData)}&logo=${logoUrl}&logo_size=80x80`;
         
         setQrUrl(qrApiUrl);
+        setIsLoadingQR(true);
         setQrGenerated(true);
-        
-        toast({
-          title: "QR generado con éxito",
-          description: "Tu código QR está listo para usar",
-        });
       } else {
         setError("DNI no encontrado. Por favor verifica el número ingresado.");
         toast({
@@ -91,7 +88,16 @@ const QRModal = ({ isOpen, onClose }: QRModalProps) => {
     setError("");
     setQrGenerated(false);
     setQrUrl("");
+    setIsLoadingQR(false);
     onClose();
+  };
+
+  const handleQRImageLoad = () => {
+    setIsLoadingQR(false);
+    toast({
+      title: "QR generado con éxito",
+      description: "Tu código QR está listo para usar",
+    });
   };
 
   const handleDownload = () => {
@@ -169,38 +175,50 @@ const QRModal = ({ isOpen, onClose }: QRModalProps) => {
           </form>
         ) : (
           <div className="space-y-6">
-            <div className="flex justify-center">
-              <div className="p-4 bg-white rounded-lg shadow-lg">
-                <img 
-                  src={qrUrl} 
-                  alt="Código QR de acceso" 
-                  className="w-64 h-64"
-                />
+            {isLoadingQR ? (
+              <div className="flex flex-col items-center justify-center py-12">
+                <Loader2 className="h-12 w-12 animate-spin text-primary" />
+                <p className="mt-4 text-sm text-muted-foreground font-inter">
+                  Generando tu código QR...
+                </p>
               </div>
-            </div>
-            
-            <p className="text-center text-sm text-muted-foreground font-inter">
-              Presenta este código QR en la entrada de la pileta
-            </p>
+            ) : (
+              <>
+                <div className="flex justify-center">
+                  <div className="p-4 bg-white rounded-lg shadow-lg">
+                    <img 
+                      src={qrUrl} 
+                      alt="Código QR de acceso" 
+                      className="w-64 h-64"
+                      onLoad={handleQRImageLoad}
+                    />
+                  </div>
+                </div>
+                
+                <p className="text-center text-sm text-muted-foreground font-inter">
+                  Presenta este código QR en la entrada de la pileta
+                </p>
 
-            <div className="flex gap-3">
-              <Button
-                type="button"
-                variant="outline"
-                onClick={handleClose}
-                className="flex-1 font-montserrat"
-              >
-                Cerrar
-              </Button>
-              <Button
-                type="button"
-                onClick={handleDownload}
-                className="flex-1 font-montserrat"
-              >
-                <Download className="mr-2 h-4 w-4" />
-                Descargar QR
-              </Button>
-            </div>
+                <div className="flex gap-3">
+                  <Button
+                    type="button"
+                    variant="outline"
+                    onClick={handleClose}
+                    className="flex-1 font-montserrat"
+                  >
+                    Cerrar
+                  </Button>
+                  <Button
+                    type="button"
+                    onClick={handleDownload}
+                    className="flex-1 font-montserrat"
+                  >
+                    <Download className="mr-2 h-4 w-4" />
+                    Descargar QR
+                  </Button>
+                </div>
+              </>
+            )}
           </div>
         )}
       </DialogContent>
