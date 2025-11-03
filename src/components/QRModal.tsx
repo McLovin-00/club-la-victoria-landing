@@ -1,6 +1,12 @@
 import { useState } from "react";
 import { z } from "zod";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+} from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -45,13 +51,18 @@ const QRModal = ({ isOpen, onClose }: QRModalProps) => {
       const data = await response.json();
 
       if (data) {
+        setIsLoadingQR(true);
+
         // Generate QR code with logo
         const qrData = `dni:${validatedData.dni}`;
-        const logoUrl = encodeURIComponent("https://i.ibb.co/9yqvMc4/logo-fondo-limpio.png");
-        const qrApiUrl = `https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=${encodeURIComponent(qrData)}&logo=${logoUrl}&logo_size=80x80`;
-        
+        const logoUrl = encodeURIComponent(
+          "https://i.ibb.co/9yqvMc4/logo-fondo-limpio.png"
+        );
+        const qrApiUrl = `https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=${encodeURIComponent(
+          qrData
+        )}&logo=${logoUrl}&logo_size=80x80`;
+
         setQrUrl(qrApiUrl);
-        setIsLoadingQR(true);
         setQrGenerated(true);
       } else {
         setError("DNI no encontrado. Por favor verifica el número ingresado.");
@@ -73,6 +84,7 @@ const QRModal = ({ isOpen, onClose }: QRModalProps) => {
         });
       }
     } finally {
+      setIsLoadingQR(false)
       setIsSubmitting(false);
     }
   };
@@ -102,13 +114,13 @@ const QRModal = ({ isOpen, onClose }: QRModalProps) => {
   };
 
   const handleDownload = () => {
-    const link = document.createElement('a');
+    const link = document.createElement("a");
     link.href = qrUrl;
     link.download = `qr-acceso-${dni}.png`;
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
-    
+
     toast({
       title: "QR descargado",
       description: "El código QR se ha descargado correctamente",
@@ -214,15 +226,15 @@ const QRModal = ({ isOpen, onClose }: QRModalProps) => {
               <>
                 <div className="flex justify-center">
                   <div className="p-4 bg-white rounded-lg shadow-lg">
-                    <img 
-                      src={qrUrl} 
-                      alt="Código QR de acceso" 
+                    <img
+                      src={qrUrl}
+                      alt="Código QR de acceso"
                       className="w-64 h-64"
                       onLoad={handleQRImageLoad}
                     />
                   </div>
                 </div>
-                
+
                 <p className="text-center text-sm text-muted-foreground font-inter">
                   Presenta este código QR en la entrada de la pileta
                 </p>
@@ -232,7 +244,7 @@ const QRModal = ({ isOpen, onClose }: QRModalProps) => {
                     type="button"
                     variant="outline"
                     onClick={handleClose}
-                    className="flex-1 font-montserrat"
+                    className="flex-1 border-destructive text-destructive hover:bg-destructive hover:text-white font-montserrat font-semibold transition-colors"
                   >
                     Cerrar
                   </Button>
