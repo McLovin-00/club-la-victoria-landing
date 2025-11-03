@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { ChevronDown } from "lucide-react";
 import heroBg from "@/assets/hero-bg4.jpg";
 import logo from "@/assets/logo.png";
+import mascota from "@/assets/mascota.png";
 
 const Hero = () => {
   return (
@@ -16,6 +17,16 @@ const Hero = () => {
       }}
     >
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-background/20" />
+      
+      {/* Mascota decorativa */}
+      <div className="hidden xl:block absolute bottom-0 right-10 z-20 animate-fade-in">
+        <img 
+          src={mascota} 
+          alt="Mascota del Club La Victoria" 
+          className="h-96 w-auto drop-shadow-2xl animate-float"
+          style={{ animationDuration: '4s' }}
+        />
+      </div>
       
       <div className="container mx-auto px-4 z-10 text-center">
         <div className="animate-fade-in-up">
