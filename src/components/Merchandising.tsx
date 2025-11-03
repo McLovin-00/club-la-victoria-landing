@@ -1,30 +1,55 @@
 import { useInView } from "@/hooks/use-in-view";
-import { ShoppingBag, Shirt, CircleDot } from "lucide-react";
+import { ShoppingBag } from "lucide-react";
 import { Button } from "./ui/button";
 import { Card, CardContent } from "./ui/card";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
+import Autoplay from "embla-carousel-autoplay";
+import conjuntoBlanco from "@/assets/merchandising/conjunto-blanco.png";
+import remeraNegra from "@/assets/merchandising/remera-negra.png";
+import gorra1 from "@/assets/merchandising/gorra-1.png";
+import gorra2 from "@/assets/merchandising/gorra-2.png";
+import fotoGorras1 from "@/assets/merchandising/foto-gorras-1.jpg";
+import fotoGorras2 from "@/assets/merchandising/foto-gorras-2.jpg";
 
 const Merchandising = () => {
   const { ref, isInView } = useInView();
 
   const products = [
     {
-      name: "Remera Oficial",
-      description: "Remera de algodón con el escudo del club",
-      icon: Shirt,
+      name: "Conjunto Deportivo",
+      description: "Conjunto completo para entrenar con el escudo del club",
+      image: conjuntoBlanco,
       gradient: "from-primary/20 via-primary/10 to-transparent",
     },
     {
-      name: "Gorra Deportiva",
-      description: "Gorra ajustable con bordado del club",
-      icon: CircleDot,
+      name: "Remera Deportiva",
+      description: "Remera de entrenamiento con diseño exclusivo",
+      image: remeraNegra,
       gradient: "from-secondary/20 via-secondary/10 to-transparent",
     },
     {
-      name: "Conjunto Deportivo",
-      description: "Conjunto completo para entrenar",
-      icon: ShoppingBag,
+      name: "Gorra Escudo",
+      description: "Gorra ajustable con bordado del club",
+      image: gorra2,
       gradient: "from-accent/20 via-accent/10 to-transparent",
     },
+    {
+      name: "Gorra Logo",
+      description: "Gorra con diseño del logo exclusivo",
+      image: gorra1,
+      gradient: "from-primary/20 via-primary/10 to-transparent",
+    },
+  ];
+
+  const galleryImages = [
+    { image: fotoGorras1, alt: "Merchandising del club junto a la pileta" },
+    { image: fotoGorras2, alt: "Productos oficiales del club" },
   ];
 
   const handleContactClick = () => {
@@ -64,38 +89,76 @@ const Merchandising = () => {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-8 mb-12">
-          {products.map((product, index) => {
-            const Icon = product.icon;
-            return (
-              <div
-                key={index}
-                className={`transition-all duration-700 delay-${index * 100} ${
-                  isInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
-                }`}
-              >
-                <Card className="group relative overflow-hidden border-2 hover:border-primary/50 transition-all duration-500 hover:shadow-2xl hover:shadow-primary/20 h-full">
-                  <div className={`absolute inset-0 bg-gradient-to-br ${product.gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
+          {products.map((product, index) => (
+            <div
+              key={index}
+              className={`transition-all duration-700 delay-${index * 100} ${
+                isInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+              }`}
+            >
+              <Card className="group relative overflow-hidden border-2 hover:border-primary/50 transition-all duration-500 hover:shadow-2xl hover:shadow-primary/20 h-full">
+                <div className={`absolute inset-0 bg-gradient-to-br ${product.gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
+                
+                <CardContent className="p-6 relative z-10">
+                  <div className="mb-4 relative overflow-hidden rounded-xl bg-card aspect-square flex items-center justify-center">
+                    <img 
+                      src={product.image} 
+                      alt={product.name}
+                      className="w-full h-full object-contain transform group-hover:scale-110 transition-transform duration-500"
+                    />
+                  </div>
                   
-                  <CardContent className="p-8 relative z-10">
-                    <div className="mb-6 relative">
-                      <div className="w-24 h-24 mx-auto bg-gradient-to-br from-primary/20 to-secondary/20 rounded-2xl flex items-center justify-center transform group-hover:scale-110 group-hover:rotate-3 transition-all duration-500">
-                        <Icon className="w-12 h-12 text-primary" />
-                      </div>
-                    </div>
-                    
-                    <h3 className="font-montserrat text-2xl font-bold mb-3 text-foreground group-hover:text-primary transition-colors duration-300">
-                      {product.name}
-                    </h3>
-                    
-                    <p className="font-inter text-muted-foreground leading-relaxed">
-                      {product.description}
-                    </p>
-                  </CardContent>
-                </Card>
-              </div>
-            );
-          })}
+                  <h3 className="font-montserrat text-xl font-bold mb-2 text-foreground group-hover:text-primary transition-colors duration-300">
+                    {product.name}
+                  </h3>
+                  
+                  <p className="font-inter text-sm text-muted-foreground leading-relaxed">
+                    {product.description}
+                  </p>
+                </CardContent>
+              </Card>
+            </div>
+          ))}
+        </div>
+
+        {/* Gallery Carousel */}
+        <div className="mb-12">
+          <h3 className="font-montserrat text-3xl font-bold text-center mb-8 text-foreground">
+            Galería de Productos
+          </h3>
+          <Carousel
+            opts={{
+              align: "start",
+              loop: true,
+            }}
+            plugins={[
+              Autoplay({
+                delay: 4000,
+              }),
+            ]}
+            className="w-full max-w-5xl mx-auto"
+          >
+            <CarouselContent>
+              {galleryImages.map((item, index) => (
+                <CarouselItem key={index}>
+                  <div className="p-1">
+                    <Card className="border-2 overflow-hidden">
+                      <CardContent className="p-0">
+                        <img
+                          src={item.image}
+                          alt={item.alt}
+                          className="w-full h-[400px] md:h-[500px] object-cover"
+                        />
+                      </CardContent>
+                    </Card>
+                  </div>
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            <CarouselPrevious className="left-4" />
+            <CarouselNext className="right-4" />
+          </Carousel>
         </div>
 
         <div className="text-center">
