@@ -1,5 +1,6 @@
 import { Trophy, Users, Target } from "lucide-react";
 import { useInView } from "@/hooks/use-in-view";
+import mascota from "@/assets/mascota.png";
 
 const About = () => {
   const { ref, isInView } = useInView();
@@ -49,39 +50,50 @@ const About = () => {
           ))}
         </div>
 
-        <div className={`max-w-4xl mx-auto space-y-6 transition-all duration-1000 delay-500 ${isInView ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-10'}`}>
-          <div className="bg-card/50 backdrop-blur-sm border-2 border-primary/10 rounded-2xl p-8 shadow-lg">
-            <p className="font-inter text-lg text-foreground/90 leading-relaxed">
-              El Club de Cazadores "La Victoria" fue establecido el{" "}
-              <span className="font-bold text-primary bg-primary/10 px-2 py-1 rounded">
-                4 de septiembre de 1944
-              </span>{" "}
-              con el objetivo principal de construir una entidad deportiva y
-              social dedicada a la práctica del tiro a paloma, más tarde
-              reemplazado por el tiro al vuelo (platillo y hélice). A lo largo del
-              tiempo hemos ampliado nuestras actividades incorporando nuevas
-              disciplinas como Tenis, Pádel, Hockey, Gimnasia Artística y Voley.
-            </p>
+        <div className="relative">
+          {/* Mascota decorativa */}
+          <div className={`hidden lg:block absolute -right-20 top-0 transition-all duration-1000 delay-700 ${isInView ? 'opacity-100 translate-x-0 rotate-0' : 'opacity-0 translate-x-20 rotate-12'}`}>
+            <img 
+              src={mascota} 
+              alt="Mascota del Club La Victoria" 
+              className="w-64 h-auto drop-shadow-2xl hover:scale-105 transition-transform duration-300"
+            />
           </div>
 
-          <div className="bg-card/50 backdrop-blur-sm border-2 border-primary/10 rounded-2xl p-8 shadow-lg">
-            <p className="font-inter text-lg text-foreground/90 leading-relaxed">
-              En el transcurso de los años, hemos desarrollado infraestructuras
-              significativas que incluyen un natatorio recreativo, un gimnasio,
-              canchas de pádel, fútbol, hockey y tenis, así como un salón comedor
-              y un quincho para mayor comodidad de nuestros miembros.
-            </p>
-          </div>
+          <div className={`max-w-4xl mx-auto space-y-6 transition-all duration-1000 delay-500 ${isInView ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-10'}`}>
+            <div className="bg-card/50 backdrop-blur-sm border-2 border-primary/10 rounded-2xl p-8 shadow-lg">
+              <p className="font-inter text-lg text-foreground/90 leading-relaxed">
+                El Club de Cazadores "La Victoria" fue establecido el{" "}
+                <span className="font-bold text-primary bg-primary/10 px-2 py-1 rounded">
+                  4 de septiembre de 1944
+                </span>{" "}
+                con el objetivo principal de construir una entidad deportiva y
+                social dedicada a la práctica del tiro a paloma, más tarde
+                reemplazado por el tiro al vuelo (platillo y hélice). A lo largo del
+                tiempo hemos ampliado nuestras actividades incorporando nuevas
+                disciplinas como Tenis, Pádel, Hockey, Gimnasia Artística y Voley.
+              </p>
+            </div>
 
-          <div className="bg-card/50 backdrop-blur-sm border-2 border-primary/10 rounded-2xl p-8 shadow-lg">
-            <p className="font-inter text-lg text-foreground/90 leading-relaxed">
-              Como pionera entre las instituciones locales, ha desempeñado un
-              papel fundamental como punto de encuentro para niños, jóvenes y
-              adultos. Esta institución ha sido testigo de sacrificios, alegrías y
-              triunfos, así como de desafíos y superación constante. Ha sido un
-              espacio donde la convivencia y la colaboración en equipo han sido
-              valores fundamentales.
-            </p>
+            <div className="bg-card/50 backdrop-blur-sm border-2 border-primary/10 rounded-2xl p-8 shadow-lg">
+              <p className="font-inter text-lg text-foreground/90 leading-relaxed">
+                En el transcurso de los años, hemos desarrollado infraestructuras
+                significativas que incluyen un natatorio recreativo, un gimnasio,
+                canchas de pádel, fútbol, hockey y tenis, así como un salón comedor
+                y un quincho para mayor comodidad de nuestros miembros.
+              </p>
+            </div>
+
+            <div className="bg-card/50 backdrop-blur-sm border-2 border-primary/10 rounded-2xl p-8 shadow-lg">
+              <p className="font-inter text-lg text-foreground/90 leading-relaxed">
+                Como pionera entre las instituciones locales, ha desempeñado un
+                papel fundamental como punto de encuentro para niños, jóvenes y
+                adultos. Esta institución ha sido testigo de sacrificios, alegrías y
+                triunfos, así como de desafíos y superación constante. Ha sido un
+                espacio donde la convivencia y la colaboración en equipo han sido
+                valores fundamentales.
+              </p>
+            </div>
           </div>
         </div>
       </div>
