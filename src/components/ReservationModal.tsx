@@ -63,10 +63,6 @@ const ReservationModal = ({
         data = undefined;
       }
 
-      // Log de depuración (útil para probar con 42533302)
-      // eslint-disable-next-line no-console
-      console.debug("[Reserva API] status:", res.status, "body:", data);
-
       // Normalizar varias formas de 'true' que pueda devolver la API
       const isTrue =
         data === true ||
