@@ -101,11 +101,11 @@ const Merchandising = () => {
                 <div className={`absolute inset-0 bg-gradient-to-br ${product.gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
                 
                 <CardContent className="p-6 relative z-10">
-                  <div className="mb-4 relative overflow-hidden rounded-xl bg-card aspect-square flex items-center justify-center">
+                  <div className="mb-4 relative overflow-hidden rounded-xl bg-card aspect-square flex items-center justify-center p-4">
                     <img 
                       src={product.image} 
                       alt={product.name}
-                      className="w-full h-full object-contain transform group-hover:scale-110 transition-transform duration-500"
+                      className="w-full h-full object-contain transform group-hover:scale-105 transition-transform duration-500"
                     />
                   </div>
                   
@@ -148,7 +148,7 @@ const Merchandising = () => {
                         <img
                           src={item.image}
                           alt={item.alt}
-                          className="w-full h-[400px] md:h-[500px] object-cover"
+                          className="w-full h-[400px] md:h-[500px] object-contain bg-muted"
                         />
                       </CardContent>
                     </Card>
