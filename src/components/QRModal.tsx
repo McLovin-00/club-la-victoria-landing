@@ -92,6 +92,7 @@ const QRModal = ({ isOpen, onClose }: QRModalProps) => {
     onClose();
   };
 
+<<<<<<< HEAD
   const handleQRImageLoad = () => {
     setIsLoadingQR(false);
     toast({
@@ -112,6 +113,32 @@ const QRModal = ({ isOpen, onClose }: QRModalProps) => {
       title: "QR descargado",
       description: "El código QR se ha descargado correctamente",
     });
+=======
+  const handleDownload = async () => {
+    try {
+      const response = await fetch(qrUrl);
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `qr-acceso-${dni}.png`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(url);
+      
+      toast({
+        title: "QR descargado",
+        description: "El código QR se ha descargado correctamente",
+      });
+    } catch (error) {
+      toast({
+        variant: "destructive",
+        title: "Error",
+        description: "No se pudo descargar el código QR",
+      });
+    }
+>>>>>>> d41baef (Ultimos cambios)
   };
 
   return (
@@ -130,7 +157,7 @@ const QRModal = ({ isOpen, onClose }: QRModalProps) => {
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="space-y-2">
               <Label htmlFor="dni" className="font-inter font-medium">
-                DNI del socio
+                DNI del socio(sin puntos)
               </Label>
               <Input
                 id="dni"
@@ -182,6 +209,7 @@ const QRModal = ({ isOpen, onClose }: QRModalProps) => {
                   Generando tu código QR...
                 </p>
               </div>
+<<<<<<< HEAD
             ) : (
               <>
                 <div className="flex justify-center">
@@ -219,6 +247,32 @@ const QRModal = ({ isOpen, onClose }: QRModalProps) => {
                 </div>
               </>
             )}
+=======
+            </div>
+            
+            <p className="text-center text-sm text-muted-foreground font-inter">
+              Presenta este código QR en la entrada del club
+            </p>
+
+            <div className="flex gap-3">
+              <Button
+                type="button"
+                variant="outline"
+                onClick={handleClose}
+                className="flex-1 border-destructive text-destructive hover:bg-destructive hover:text-white font-montserrat font-semibold transition-colors"
+              >
+                Cerrar
+              </Button>
+              <Button
+                type="button"
+                onClick={handleDownload}
+                className="flex-1 bg-primary hover:bg-primary/90 font-montserrat font-semibold flex items-center justify-center"
+              >
+                <Download className="mr-2 h-4 w-4" />
+                Descargar QR
+              </Button>
+            </div>
+>>>>>>> d41baef (Ultimos cambios)
           </div>
         )}
       </DialogContent>

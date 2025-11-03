@@ -3,11 +3,15 @@ import { Menu, X, QrCode } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import logo from "@/assets/logo.png";
 import QRModal from "./QRModal";
+import { useActiveSection } from "@/hooks/use-active-section";
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isQRModalOpen, setIsQRModalOpen] = useState(false);
+
+  const sectionIds = ["#inicio", "#club", "#actividades", "#instalaciones", "#merchandising", "#contacto"];
+  const activeSection = useActiveSection(sectionIds);
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 20);
@@ -46,9 +50,9 @@ const Navbar = () => {
             className="flex items-center gap-2 animate-fade-in t"
             onClick={(e) => handleSmoothScroll(e, "#inicio")}
           >
-            <img src={logo} alt="Club La Victoria" className="h-12 w-auto md:h-14 object-contain" />
+            <img src={logo} alt="Club La Victoria" className="block h-12 w-auto md:h-14 object-contain" />
             <span
-              className={`font-montserrat font-bold text-lg md:text-xl ${
+              className={`hidden lg:block font-montserrat font-bold text-lg lg:text-xl ${
                 isScrolled || isMobileMenuOpen ? "text-black" : "text-white"
               }`}
             >
@@ -61,14 +65,20 @@ const Navbar = () => {
               <a
                 key={item.name}
                 href={item.href}
-                className={`font-inter font-medium hover:text-primary transition-colors relative group ${
-                  isScrolled || isMobileMenuOpen ? "text-black" : "text-white"
+                className={`font-inter font-medium transition-colors relative group ${
+                  activeSection === item.href
+                    ? "text-primary font-semibold"
+                    : isScrolled || isMobileMenuOpen
+                    ? "text-black hover:text-primary"
+                    : "text-white hover:text-primary"
                 }`}
                 style={{ animationDelay: `${index * 100}ms` }}
                 onClick={(e) => handleSmoothScroll(e, item.href)}
               >
                 {item.name}
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all group-hover:w-full" />
+                <span className={`absolute -bottom-1 left-0 h-0.5 bg-primary transition-all ${
+                  activeSection === item.href ? "w-full" : "w-0 group-hover:w-full"
+                }`} />
               </a>
             ))}
             <Button
@@ -108,8 +118,12 @@ const Navbar = () => {
               <a
                 key={item.name}
                 href={item.href}
-                className={`block py-3 font-inter font-medium hover:text-primary transition-colors ${
-                  isScrolled || isMobileMenuOpen ? "text-black" : "text-white"
+                className={`block py-3 font-inter font-medium transition-colors ${
+                  activeSection === item.href
+                    ? "text-primary font-semibold"
+                    : isScrolled || isMobileMenuOpen
+                    ? "text-black hover:text-primary"
+                    : "text-white hover:text-primary"
                 }`}
                 onClick={(e) => handleSmoothScroll(e, item.href)}
               >
