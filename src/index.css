@@ -112,6 +112,10 @@ All colors MUST be HSL.
   body {
     @apply bg-background text-foreground;
     position: relative;
+    /* Optimize font rendering */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
   }
   
   body::before {
@@ -135,11 +139,19 @@ All colors MUST be HSL.
       0 0;
     pointer-events: none;
     z-index: 0;
+    /* Use GPU for compositing */
+    will-change: transform;
+    transform: translateZ(0);
   }
   
   body > * {
     position: relative;
     z-index: 1;
+  }
+
+  /* Optimize images */
+  img {
+    content-visibility: auto;
   }
 }
 
@@ -158,6 +170,12 @@ All colors MUST be HSL.
   z-index: 0;
   opacity: 0.4;
   animation: float 20s ease-in-out infinite;
+  /* Use GPU acceleration */
+  will-change: transform;
+  transform: translateZ(0);
+  /* Reduce repaints */
+  backface-visibility: hidden;
+  perspective: 1000px;
 }
 
 .floating-shape-1 {

@@ -1,9 +1,11 @@
+import { memo, useMemo } from "react";
 import { MapPin, Phone, Mail, Clock } from "lucide-react";
 import logo from "@/assets/logo.png";
+import wolfLogo from "@/assets/logo-lobo.webp";
 import { FaFacebook, FaInstagram } from "react-icons/fa";
 
-const Footer = () => {
-  const currentYear = new Date().getFullYear();
+const Footer = memo(() => {
+  const currentYear = useMemo(() => new Date().getFullYear(), []);
 
   return (
     <footer className="bg-gradient-to-b from-foreground to-foreground/90 text-background relative overflow-hidden">
@@ -16,8 +18,10 @@ const Footer = () => {
           <div className="animate-fade-in">
             <div className="flex items-center gap-3 mb-6">
               <div className="p-2 rounded-xl bg-primary/20 backdrop-blur-sm">
-                <img src={logo} alt="Club La Victoria" className="h-10 w-10" />
+                <img src={logo} alt="Club La Victoria" className="h-10 w-10 object-contain" loading="lazy" width="40" height="40" decoding="async" />
               </div>
+              {/* Secondary logo: wolf */}
+              <img src={wolfLogo} alt="" className="h-10 w-10 hidden sm:block object-contain drop-shadow-md" loading="lazy" width="40" height="40" decoding="async" aria-hidden="true" />
               <span className="font-montserrat font-bold text-xl">
                 CLUB LA VICTORIA
               </span>
@@ -32,6 +36,7 @@ const Footer = () => {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="group w-11 h-11 rounded-xl bg-primary/20 backdrop-blur-sm flex items-center justify-center hover:bg-primary hover:scale-110 transition-all duration-300 shadow-md hover:shadow-lg"
+                aria-label="Visitar Facebook"
               >
                 <FaFacebook size={22} className="group-hover:scale-110 transition-transform" />
               </a>
@@ -40,6 +45,7 @@ const Footer = () => {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="group w-11 h-11 rounded-xl bg-primary/20 backdrop-blur-sm flex items-center justify-center hover:bg-primary hover:scale-110 transition-all duration-300 shadow-md hover:shadow-lg"
+                aria-label="Visitar Instagram"
               >
                 <FaInstagram size={22} className="group-hover:scale-110 transition-transform" />
               </a>
@@ -58,7 +64,7 @@ const Footer = () => {
               </li>
               <li className="flex gap-3 text-background/80 group">
                 <Phone size={20} className="text-primary flex-shrink-0 group-hover:scale-110 transition-transform" />
-                <span className="group-hover:text-background transition-colors">+54 (XXX) XXX-XXXX</span>
+                <span className="group-hover:text-background transition-colors">3471 491199</span>
               </li>
               <li className="flex gap-3 text-background/80 group">
                 <Mail size={20} className="text-primary flex-shrink-0 group-hover:scale-110 transition-transform" />
@@ -108,6 +114,8 @@ const Footer = () => {
       </div>
     </footer>
   );
-};
+});
+
+Footer.displayName = "Footer";
 
 export default Footer;

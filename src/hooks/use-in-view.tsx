@@ -5,22 +5,31 @@ export function useInView(options?: IntersectionObserverInit) {
   const [isInView, setIsInView] = useState(false);
 
   useEffect(() => {
-    const observer = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting) {
-        setIsInView(true);
-      }
-    }, { threshold: 0.1, ...options });
+    const currentRef = ref.current;
 
-    if (ref.current) {
-      observer.observe(ref.current);
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsInView(true);
+          // Once visible, stop observing to save resources
+          if (currentRef) {
+            observer.unobserve(currentRef);
+          }
+        }
+      },
+      { threshold: 0.1, ...options }
+    );
+
+    if (currentRef) {
+      observer.observe(currentRef);
     }
 
     return () => {
-      if (ref.current) {
-        observer.unobserve(ref.current);
+      if (currentRef) {
+        observer.unobserve(currentRef);
       }
     };
-  }, []);
+  }, []); // Empty deps - only set up observer once
 
   return { ref, isInView };
 }

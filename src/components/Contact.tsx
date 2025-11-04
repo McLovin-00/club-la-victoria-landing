@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useCallback, memo } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -14,7 +14,51 @@ const contactSchema = z.object({
   message: z.string().trim().min(1, "El mensaje es requerido").max(1000, "El mensaje debe tener menos de 1000 caracteres"),
 });
 
-const Contact = () => {
+const CONTACT_INFO = [
+  {
+    icon: MapPin,
+    title: "Dirección",
+    content: "Libertad 1212, Villa Eloísa, Santa Fe",
+  },
+  {
+    icon: Phone,
+    title: "Teléfono",
+    content: "3471 491199",
+  },
+  {
+    icon: Mail,
+    title: "Email",
+    content: "info@clublavictoria.com.ar",
+  },
+] as const;
+
+// Memoized Contact Info Card
+const ContactInfoCard = memo(({ info }: { info: typeof CONTACT_INFO[number] }) => {
+  const Icon = info.icon;
+  return (
+    <Card className="group border-2 hover:border-primary/50 transition-all duration-300 hover:shadow-xl hover:-translate-y-1 bg-card/80 backdrop-blur-sm">
+      <CardContent className="p-6">
+        <div className="flex items-start gap-4">
+          <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-primary/20 to-primary/10 flex items-center justify-center group-hover:scale-110 transition-transform duration-300 flex-shrink-0">
+            <Icon className="text-primary" size={28} />
+          </div>
+          <div>
+            <h3 className="font-montserrat font-bold text-xl mb-2">
+              {info.title}
+            </h3>
+            <p className="font-inter text-muted-foreground">
+              {info.content}
+            </p>
+          </div>
+        </div>
+      </CardContent>
+    </Card>
+  );
+});
+
+ContactInfoCard.displayName = "ContactInfoCard";
+
+const Contact = memo(() => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -23,9 +67,9 @@ const Contact = () => {
   const [errors, setErrors] = useState<Record<string, string>>({});
   const { ref, isInView } = useInView();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = useCallback((e: React.FormEvent) => {
     e.preventDefault();
-    
+
     try {
       contactSchema.parse(formData);
       setErrors({});
@@ -42,22 +86,22 @@ const Contact = () => {
         setErrors(newErrors);
       }
     }
-  };
+  }, [formData]);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
     if (errors[name]) {
       setErrors((prev) => ({ ...prev, [name]: "" }));
     }
-  };
+  }, [errors]);
 
   return (
     <section id="contacto" className="py-20 md:py-32 bg-gradient-to-b from-background to-muted/30 relative overflow-hidden" ref={ref}>
       {/* Decorative elements */}
       <div className="absolute top-0 right-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl" />
       <div className="absolute bottom-0 left-0 w-96 h-96 bg-secondary/5 rounded-full blur-3xl" />
-      
+
       <div className="container mx-auto px-4 relative z-10">
         <div className={`text-center mb-16 transition-all duration-700 ${isInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
           <h2 className="font-montserrat font-bold text-4xl md:text-6xl text-foreground mb-6">
@@ -74,59 +118,9 @@ const Contact = () => {
         <div className="grid lg:grid-cols-2 gap-12 mb-16 max-w-6xl mx-auto">
           {/* Left Column - Contact Info Cards */}
           <div className={`space-y-6 transition-all duration-1000 delay-200 ${isInView ? 'opacity-100 -translate-x-0' : 'opacity-0 -translate-x-10'}`}>
-            <Card className="group border-2 hover:border-primary/50 transition-all duration-300 hover:shadow-xl hover:-translate-y-1 bg-card/80 backdrop-blur-sm">
-              <CardContent className="p-6">
-                <div className="flex items-start gap-4">
-                  <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-primary/20 to-primary/10 flex items-center justify-center group-hover:scale-110 transition-transform duration-300 flex-shrink-0">
-                    <MapPin className="text-primary" size={28} />
-                  </div>
-                  <div>
-                    <h3 className="font-montserrat font-bold text-xl mb-2">
-                      Dirección
-                    </h3>
-                    <p className="font-inter text-muted-foreground">
-                      Libertad 1212, Villa Eloísa, Santa Fe
-                    </p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card className="group border-2 hover:border-primary/50 transition-all duration-300 hover:shadow-xl hover:-translate-y-1 bg-card/80 backdrop-blur-sm">
-              <CardContent className="p-6">
-                <div className="flex items-start gap-4">
-                  <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-primary/20 to-primary/10 flex items-center justify-center group-hover:scale-110 transition-transform duration-300 flex-shrink-0">
-                    <Phone className="text-primary" size={28} />
-                  </div>
-                  <div>
-                    <h3 className="font-montserrat font-bold text-xl mb-2">
-                      Teléfono
-                    </h3>
-                    <p className="font-inter text-muted-foreground">
-                      +54 (XXX) XXX-XXXX
-                    </p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card className="group border-2 hover:border-primary/50 transition-all duration-300 hover:shadow-xl hover:-translate-y-1 bg-card/80 backdrop-blur-sm">
-              <CardContent className="p-6">
-                <div className="flex items-start gap-4">
-                  <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-primary/20 to-primary/10 flex items-center justify-center group-hover:scale-110 transition-transform duration-300 flex-shrink-0">
-                    <Mail className="text-primary" size={28} />
-                  </div>
-                  <div>
-                    <h3 className="font-montserrat font-bold text-xl mb-2">
-                      Email
-                    </h3>
-                    <p className="font-inter text-muted-foreground">
-                      info@clublavictoria.com.ar
-                    </p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
+            {CONTACT_INFO.map((info) => (
+              <ContactInfoCard key={info.title} info={info} />
+            ))}
           </div>
 
           {/* Right Column - Contact Form */}
@@ -237,6 +231,8 @@ const Contact = () => {
       </div>
     </section>
   );
-};
+});
+
+Contact.displayName = "Contact";
 
 export default Contact;

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useCallback, memo } from "react";
 import { z } from "zod";
 import {
   Dialog,
@@ -26,7 +26,7 @@ interface QRModalProps {
   onClose: () => void;
 }
 
-const QRModal = ({ isOpen, onClose }: QRModalProps) => {
+const QRModal = memo(({ isOpen, onClose }: QRModalProps) => {
   const [dni, setDni] = useState("");
   const [error, setError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -35,7 +35,7 @@ const QRModal = ({ isOpen, onClose }: QRModalProps) => {
   const [isLoadingQR, setIsLoadingQR] = useState(false);
   const { toast } = useToast();
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = useCallback(async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
     setIsSubmitting(true);
@@ -84,35 +84,35 @@ const QRModal = ({ isOpen, onClose }: QRModalProps) => {
         });
       }
     } finally {
-      setIsLoadingQR(false)
+      setIsLoadingQR(false);
       setIsSubmitting(false);
     }
-  };
+  }, [dni, toast]);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value.replace(/\D/g, "");
     setDni(value);
     setError("");
-  };
+  }, []);
 
-  const handleClose = () => {
+  const handleClose = useCallback(() => {
     setDni("");
     setError("");
     setQrGenerated(false);
     setQrUrl("");
     setIsLoadingQR(false);
     onClose();
-  };
+  }, [onClose]);
 
-  const handleQRImageLoad = () => {
+  const handleQRImageLoad = useCallback(() => {
     setIsLoadingQR(false);
     toast({
       title: "QR generado con éxito",
       description: "Tu código QR está listo para usar",
     });
-  };
+  }, [toast]);
 
-  const handleDownload = async () => {
+  const handleDownload = useCallback(async () => {
     try {
       const response = await fetch(qrUrl);
       const blob = await response.blob();
@@ -124,7 +124,7 @@ const QRModal = ({ isOpen, onClose }: QRModalProps) => {
       link.click();
       document.body.removeChild(link);
       window.URL.revokeObjectURL(url);
-      
+
       toast({
         title: "QR descargado",
         description: "El código QR se ha descargado correctamente",
@@ -136,7 +136,7 @@ const QRModal = ({ isOpen, onClose }: QRModalProps) => {
         description: "No se pudo descargar el código QR",
       });
     }
-  };
+  }, [qrUrl, dni, toast]);
 
   return (
     <Dialog open={isOpen} onOpenChange={handleClose}>
@@ -154,7 +154,7 @@ const QRModal = ({ isOpen, onClose }: QRModalProps) => {
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="space-y-2">
               <Label htmlFor="dni" className="font-inter font-medium">
-                DNI del socio(sin puntos)
+                DNI del socio (sin puntos)
               </Label>
               <Input
                 id="dni"
@@ -215,6 +215,7 @@ const QRModal = ({ isOpen, onClose }: QRModalProps) => {
                       alt="Código QR de acceso"
                       className="w-64 h-64"
                       onLoad={handleQRImageLoad}
+                      loading="lazy"
                     />
                   </div>
                 </div>
@@ -248,6 +249,8 @@ const QRModal = ({ isOpen, onClose }: QRModalProps) => {
       </DialogContent>
     </Dialog>
   );
-};
+});
+
+QRModal.displayName = "QRModal";
 
 export default QRModal;

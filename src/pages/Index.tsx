@@ -1,12 +1,21 @@
+import { lazy, Suspense } from "react";
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import About from "@/components/About";
-import Activities from "@/components/Activities";
-import Facilities from "@/components/Facilities";
-import Merchandising from "@/components/Merchandising";
-import Contact from "@/components/Contact";
-import Footer from "@/components/Footer";
-import WhatsAppButton from "@/components/WhatsAppButton";
+
+// Lazy load components below the fold
+const Activities = lazy(() => import("@/components/Activities"));
+const Facilities = lazy(() => import("@/components/Facilities"));
+const Merchandising = lazy(() => import("@/components/Merchandising"));
+const Contact = lazy(() => import("@/components/Contact"));
+const Footer = lazy(() => import("@/components/Footer"));
+
+// Lightweight loading fallback
+const LoadingFallback = () => (
+  <div className="min-h-[200px] flex items-center justify-center">
+    <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin" />
+  </div>
+);
 
 const Index = () => {
   return (
@@ -15,18 +24,22 @@ const Index = () => {
       <div className="floating-shape floating-shape-1" />
       <div className="floating-shape floating-shape-2" />
       <div className="floating-shape floating-shape-3" />
-      
+
       <Navbar />
       <Hero />
       <About />
-      <Activities />
-      <Facilities />
-      <Merchandising />
-      <Contact />
-      <Footer />
-      <WhatsAppButton />
+      
+      <Suspense fallback={<LoadingFallback />}>
+        <Activities />
+        <Facilities />
+        <Merchandising />
+        <Contact />
+        <Footer />
+      </Suspense>
     </div>
   );
 };
+
+Index.displayName = "Index";
 
 export default Index;

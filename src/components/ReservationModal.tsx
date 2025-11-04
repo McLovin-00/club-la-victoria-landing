@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useCallback, memo } from "react";
 import {
   Dialog,
   DialogContent,
@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { toast } from "sonner";
+import { useToast } from "@/hooks/use-toast";
 import { z } from "zod";
 
 const dniSchema = z.object({
@@ -26,7 +26,7 @@ interface ReservationModalProps {
   activityTitle: string;
 }
 
-const ReservationModal = ({
+const ReservationModal = memo(({
   isOpen,
   onClose,
   activityTitle,
@@ -34,12 +34,12 @@ const ReservationModal = ({
   const [dni, setDni] = useState("");
   const [error, setError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
-  
+  const { toast } = useToast();
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = useCallback(async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Validación local con Zod
+    // Local validation with Zod
     try {
       dniSchema.parse({ dni });
       setError("");
@@ -55,7 +55,7 @@ const ReservationModal = ({
       const url = `https://www.api.clublavictoria.com.ar/api/v1/socios/reserva/${dni}`;
       const res = await fetch(url, { method: "GET", headers: { Accept: "application/json" } });
 
-      // Intentar leer JSON de respuesta aunque el status no sea 200
+      // Try to read JSON response even if status is not 200
       let data = undefined;
       try {
         data = await res.json();
@@ -63,7 +63,7 @@ const ReservationModal = ({
         data = undefined;
       }
 
-      // Normalizar varias formas de 'true' que pueda devolver la API
+      // Normalize various forms of 'true' that the API might return
       const isTrue =
         data === true ||
         data === "true" ||
@@ -77,37 +77,41 @@ const ReservationModal = ({
         ));
 
       if (isTrue) {
-        // Redirigir a la URL externa
+        // Redirect to external URL
         window.location.href = "https://turnosconqr.com/club_la_victoria-prueba1";
         return;
       }
 
-      // Si la respuesta no indica que es miembro -> cerrar modal y mostrar toast
+      // If the response does not indicate member -> close modal and show toast
       setDni("");
       onClose();
-      toast.error("El DNI ingresado no está asociado al club.", { position: "top-center", duration: 5000 });
+      toast({
+        variant: "destructive",
+        title: "Error",
+        description: "El DNI ingresado no está asociado al club.",
+      });
       return;
     } catch (err) {
       setError("No se pudo conectar con el servidor. Intenta nuevamente.");
     } finally {
       setIsSubmitting(false);
     }
-  };
+  }, [dni, onClose, toast]);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
-    // Solo permitir números
+    // Only allow numbers
     if (value === "" || /^\d+$/.test(value)) {
       setDni(value);
       if (error) setError("");
     }
-  };
+  }, [error]);
 
-  const handleClose = () => {
+  const handleClose = useCallback(() => {
     setDni("");
     setError("");
     onClose();
-  };
+  }, [onClose]);
 
   return (
     <Dialog open={isOpen} onOpenChange={handleClose}>
@@ -150,6 +154,7 @@ const ReservationModal = ({
               variant="outline"
               onClick={handleClose}
               className="flex-1 border-destructive text-destructive hover:bg-destructive hover:text-white font-montserrat font-semibold transition-colors"
+              disabled={isSubmitting}
             >
               Cancelar
             </Button>
@@ -181,6 +186,8 @@ const ReservationModal = ({
       </DialogContent>
     </Dialog>
   );
-};
+});
+
+ReservationModal.displayName = "ReservationModal";
 
 export default ReservationModal;
