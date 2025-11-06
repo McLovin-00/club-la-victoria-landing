@@ -140,7 +140,7 @@ const QRModal = memo(({ isOpen, onClose }: QRModalProps) => {
 
   return (
     <Dialog open={isOpen} onOpenChange={handleClose}>
-      <DialogContent className="sm:max-w-md">
+      <DialogContent className="sm:max-w-md w-[97.5%]">
         <DialogHeader>
           <DialogTitle className="font-montserrat text-2xl">
             Generar QR de Acceso

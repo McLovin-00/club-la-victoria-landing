@@ -21,11 +21,15 @@ const Hero = memo(() => {
       className="relative min-h-screen flex items-center justify-center overflow-hidden"
     >
       {/* Background image with CSS for better performance */}
-      <div 
-        className="absolute inset-0 bg-cover bg-center bg-fixed"
+      <div
+        className="absolute inset-0 bg-cover bg-center"
         style={{
           backgroundImage: `linear-gradient(135deg, rgba(22, 163, 74, 0.55), rgba(22, 163, 74, 0.28)), url(${heroBg})`,
-          willChange: 'transform',
+          // Use a soft blur on the background and slightly scale it to avoid visible transparent edges
+          filter: 'blur(6px)',
+          transform: 'scale(1.03)',
+          willChange: 'transform, filter',
+          backgroundRepeat: 'no-repeat',
         }}
       />
       

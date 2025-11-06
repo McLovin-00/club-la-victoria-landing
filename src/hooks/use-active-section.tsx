@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 
 // Throttle helper function
-function throttle<T extends (...args: any[]) => void>(
+function throttle<T extends (...args: unknown[]) => void>(
   func: T,
   delay: number
 ): (...args: Parameters<T>) => void {
