@@ -1,17 +1,18 @@
-import { useState, useCallback, memo, useMemo } from "react";
+import { useState, useCallback, memo, useMemo, lazy, Suspense } from "react";
+import SmallSpinner from "./SmallSpinner";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import ReservationModal from "./ReservationModal";
+const ReservationModal = lazy(() => import("./ReservationModal"));
 import { useInView } from "@/hooks/use-in-view";
 import mascota from "@/assets/mascota.webp";
 
 // Import images so Vite/Bun processes them
-import iconCanchaFutbol from "@/assets/actividades/icono-cancha-futbol-5-green.png";
-import iconCanchaPaddle1 from "@/assets/actividades/icono-cancha-paddle-green.png";
-import iconCanchaPaddle2 from "@/assets/actividades/icono-cancha-paddle-green.png";
-import iconCanchaTenis from "@/assets/actividades/icono-cancha-tenis-green.png";
-import iconSalon from "@/assets/actividades/icono-salon-green.png";
-import iconQuincho from "@/assets/actividades/icono-salon-green.png";
+import iconCanchaFutbol from "@/assets/actividades/icono-cancha-futbol-5-green.webp";
+import iconCanchaPaddle1 from "@/assets/actividades/icono-cancha-paddle-green.webp";
+import iconCanchaPaddle2 from "@/assets/actividades/icono-cancha-paddle-green.webp";
+import iconCanchaTenis from "@/assets/actividades/icono-cancha-tenis-green.webp";
+import iconSalon from "@/assets/actividades/icono-salon-green.webp";
+import iconQuincho from "@/assets/actividades/icono-salon-green.webp";
 
 const ACTIVITIES = [
   {
@@ -173,11 +174,11 @@ const Activities = memo(() => {
         </div>
       </section>
 
-      <ReservationModal
-        isOpen={isModalOpen}
-        onClose={closeModal}
-        activityTitle={selectedActivity}
-      />
+      {isModalOpen && (
+        <Suspense fallback={<SmallSpinner />}>
+          <ReservationModal isOpen={isModalOpen} onClose={closeModal} activityTitle={selectedActivity} />
+        </Suspense>
+      )}
     </>
   );
 });

@@ -14,7 +14,7 @@ import Autoplay from "embla-carousel-autoplay";
 import conjuntoBlanco from "@/assets/merchandising/conjunto-blanco.webp";
 import remeraNegra from "@/assets/merchandising/remera-negra.webp";
 import gorra1 from "@/assets/merchandising/gorra-1.webp";
-import gorra2 from "@/assets/merchandising/gorra-2.png";
+import gorra2 from "@/assets/merchandising/gorra-2.webp";
 import fotoGorras1 from "@/assets/merchandising/foto-gorras-1.webp";
 import fotoGorras2 from "@/assets/merchandising/foto-gorras-2.webp";
 import fotoGorras3 from "@/assets/merchandising/foto-gorras-3.webp";
@@ -184,12 +184,15 @@ const Merchandising = memo(() => {
                 <CarouselItem key={index}>
                   <div className="p-1">
                     <Card className="border-2 overflow-hidden">
-                      <CardContent className="p-0">
+                      <CardContent className="p-0 aspect-video">
                         <img
                           src={item.image}
                           alt={item.alt}
-                          className="w-full h-[400px] md:h-[500px] object-contain bg-muted"
+                          className="w-full h-full object-contain bg-muted"
                           loading="lazy"
+                          width="1200"
+                          height="500"
+                          decoding="async"
                         />
                       </CardContent>
                     </Card>
@@ -197,8 +200,8 @@ const Merchandising = memo(() => {
                 </CarouselItem>
               ))}
             </CarouselContent>
-            <CarouselPrevious className="left-4" />
-            <CarouselNext className="right-4" />
+            <CarouselPrevious className="left-4 focus:ring-4 focus:ring-primary/50" aria-label="Ver producto anterior de la galería" />
+            <CarouselNext className="right-4 focus:ring-4 focus:ring-primary/50" aria-label="Ver siguiente producto de la galería" />
           </Carousel>
         </div>
 

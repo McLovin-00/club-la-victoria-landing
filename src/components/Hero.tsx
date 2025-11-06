@@ -2,7 +2,7 @@ import { memo, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import { ChevronDown } from "lucide-react";
 import heroBg from "@/assets/hero-bg4.webp";
-import logo from "@/assets/logo.png";
+import logo from "@/assets/logo.webp";
 
 const Hero = memo(() => {
   const scrollToActivities = useCallback(() => {
@@ -20,21 +20,17 @@ const Hero = memo(() => {
       id="inicio"
       className="relative min-h-screen flex items-center justify-center overflow-hidden"
     >
-      {/* Background image with CSS for better performance */}
+      {/* Background image optimized for performance */}
       <div
         className="absolute inset-0 bg-cover bg-center"
         style={{
           backgroundImage: `linear-gradient(135deg, rgba(22, 163, 74, 0.55), rgba(22, 163, 74, 0.28)), url(${heroBg})`,
-          // Use a soft blur on the background and slightly scale it to avoid visible transparent edges
-          filter: 'blur(6px)',
-          transform: 'scale(1.03)',
-          willChange: 'transform, filter',
           backgroundRepeat: 'no-repeat',
         }}
       />
       
       {/* Overlay for better readability */}
-      <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/40 backdrop-blur-sm" />
+      <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/40" />
 
       <div className="container mx-auto px-4 z-10 text-center">
         <div className="animate-fade-in-up">
@@ -65,7 +61,7 @@ const Hero = memo(() => {
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center animate-scale-in">
           <Button
             size="lg"
-            className="bg-secondary hover:bg-secondary/90 text-white font-montserrat font-bold text-lg px-8 py-6 shadow-2xl transform-gpu transition-transform duration-200 ease-out hover:-translate-y-1 hover:scale-105 active:scale-95 focus:outline-none focus:ring-4 focus:ring-secondary/30 motion-safe:animate-fade-in-up will-change-transform"
+            className="bg-secondary hover:bg-secondary/90 text-white font-montserrat font-bold text-lg px-8 py-6 shadow-2xl transform-gpu transition-transform duration-200 ease-out hover:-translate-y-1 hover:scale-105 active:scale-95 focus:outline-none focus:ring-4 focus:ring-secondary/30 motion-safe:animate-fade-in-up"
             onClick={scrollToActivities}
           >
             Reservar Ahora
@@ -73,7 +69,7 @@ const Hero = memo(() => {
           <Button
             size="lg"
             variant="outline"
-            className="border-2 border-white text-white hover:bg-white hover:text-primary font-montserrat font-bold text-lg px-8 py-6 shadow-2xl backdrop-blur-sm bg-white/10 transform-gpu transition-transform duration-200 ease-out hover:-translate-y-1 hover:scale-105 active:scale-95 focus:outline-none focus:ring-4 focus:ring-primary/25 motion-safe:animate-fade-in-up will-change-transform"
+            className="border-2 border-white text-white hover:bg-white hover:text-primary font-montserrat font-bold text-lg px-8 py-6 shadow-2xl bg-white/10 transform-gpu transition-transform duration-200 ease-out hover:-translate-y-1 hover:scale-105 active:scale-95 focus:outline-none focus:ring-4 focus:ring-primary/25 motion-safe:animate-fade-in-up"
             onClick={scrollToAbout}
           >
             Conocer Más

@@ -5,7 +5,17 @@ const NotFound = () => {
   const location = useLocation();
 
   useEffect(() => {
-    console.error("404 Error: User attempted to access non-existent route:", location.pathname);
+    // Only log in development
+    if (import.meta.env.DEV) {
+      console.warn("404 Error: User attempted to access:", location.pathname);
+    }
+    // In production, you could send to analytics instead
+    // if (typeof window !== 'undefined' && window.gtag) {
+    //   window.gtag('event', 'exception', {
+    //     description: `404: ${location.pathname}`,
+    //     fatal: false,
+    //   });
+    // }
   }, [location.pathname]);
 
   return (

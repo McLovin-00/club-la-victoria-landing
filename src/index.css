@@ -125,22 +125,21 @@ All colors MUST be HSL.
     left: 0;
     width: 100%;
     height: 100%;
-    background-image: 
+    background-image:
       radial-gradient(circle at 20% 30%, hsl(var(--primary) / 0.03) 0%, transparent 50%),
       radial-gradient(circle at 80% 70%, hsl(var(--secondary) / 0.02) 0%, transparent 50%),
       radial-gradient(circle at 2px 2px, hsl(var(--foreground) / 0.02) 1px, transparent 1px);
-    background-size: 
+    background-size:
       800px 800px,
       800px 800px,
       40px 40px;
-    background-position: 
+    background-position:
       0 0,
       0 0,
       0 0;
     pointer-events: none;
     z-index: 0;
     /* Use GPU for compositing */
-    will-change: transform;
     transform: translateZ(0);
   }
   
@@ -152,6 +151,25 @@ All colors MUST be HSL.
   /* Optimize images */
   img {
     content-visibility: auto;
+  }
+
+  /* Screen reader only - accessibility */
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+  }
+
+  /* Global focus-visible styling for accessibility */
+  *:focus-visible {
+    outline: 2px solid hsl(var(--primary));
+    outline-offset: 2px;
   }
 }
 
@@ -170,8 +188,7 @@ All colors MUST be HSL.
   z-index: 0;
   opacity: 0.4;
   animation: float 20s ease-in-out infinite;
-  /* Use GPU acceleration */
-  will-change: transform;
+  /* Use GPU acceleration - only when animating */
   transform: translateZ(0);
   /* Reduce repaints */
   backface-visibility: hidden;

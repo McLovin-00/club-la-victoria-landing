@@ -1,68 +1,108 @@
 import sharp from 'sharp';
-import fs from 'fs';
+import fs from 'fs/promises';
+import { existsSync } from 'fs';
 import path from 'path';
-import { fileURLToPath } from 'url';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const ROOT = process.cwd();
+const ASSETS_DIR = path.join(ROOT, 'src', 'assets');
 
-const imagesToOptimize = [
-  { input: 'src/assets/hero-bg4.jpg', output: 'src/assets/hero-bg4.webp', width: 1920, quality: 80 },
-  { input: 'src/assets/hero-bg.jpg', output: 'src/assets/hero-bg.webp', width: 1920, quality: 80 },
-  { input: 'src/assets/mascota.png', output: 'src/assets/mascota.webp', width: 800, quality: 85 },
-  { input: 'src/assets/tennis.jpg', output: 'src/assets/tennis.webp', width: 1200, quality: 80 },
-  { input: 'src/assets/padel.jpg', output: 'src/assets/padel.webp', width: 1200, quality: 80 },
-  { input: 'src/assets/pool.jpg', output: 'src/assets/pool.webp', width: 1200, quality: 80 },
-  { input: 'src/assets/gym.jpg', output: 'src/assets/gym.webp', width: 1200, quality: 80 },
-  { input: 'src/assets/merchandising/conjunto-blanco.png', output: 'src/assets/merchandising/conjunto-blanco.webp', width: 800, quality: 85 },
-  { input: 'src/assets/merchandising/remera-negra.png', output: 'src/assets/merchandising/remera-negra.webp', width: 800, quality: 85 },
-  { input: 'src/assets/merchandising/foto-gorras-1.jpg', output: 'src/assets/merchandising/foto-gorras-1.webp', width: 1000, quality: 80 },
-  { input: 'src/assets/merchandising/foto-gorras-2.jpg', output: 'src/assets/merchandising/foto-gorras-2.webp', width: 1000, quality: 80 },
-  // Newly added high-size assets to optimize
-  { input: 'src/assets/logo-lobo.png', output: 'src/assets/logo-lobo.webp', width: 800, quality: 80 },
-  { input: 'src/assets/merchandising/foto-gorras-3.png', output: 'src/assets/merchandising/foto-gorras-3.webp', width: 1000, quality: 80 },
-  { input: 'src/assets/merchandising/foto-gorras-4.png', output: 'src/assets/merchandising/foto-gorras-4.webp', width: 1000, quality: 80 },
-  { input: 'src/assets/merchandising/gorra-1.png', output: 'src/assets/merchandising/gorra-1.webp', width: 800, quality: 85 },
-  { input: 'src/assets/merchandising/Gorras.jpeg', output: 'src/assets/merchandising/Gorras.webp', width: 1000, quality: 80 },
-];
+const SUPPORTED_EXT = ['.jpg', '.jpeg', '.png', '.webp'];
 
-async function optimizeImage(config) {
-  const inputPath = path.join(__dirname, config.input);
-  const outputPath = path.join(__dirname, config.output);
+function chooseWidthFor(filePath) {
+  const p = filePath.replaceAll('\\', '/');
+  if (p.includes('/instalaciones/') && p.match(/foto-|cancha|pool|piscina|tenis|padel/)) return 1200;
+  if (p.includes('hero') || p.includes('/hero-')) return 1920;
+  if (p.includes('/merchandising/')) return 1000;
+  if (p.includes('/actividades/')) return 800;
+  if (p.includes('/icons/') || p.includes('/actividades/')) return 500;
+  return 1200;
+}
 
-  if (!fs.existsSync(inputPath)) {
-    console.log(`⚠️  Skipping ${config.input} (file not found)`);
-    return;
+async function walk(dir) {
+  const entries = await fs.readdir(dir, { withFileTypes: true });
+  const files = [];
+  for (const entry of entries) {
+    const res = path.join(dir, entry.name);
+    if (entry.isDirectory()) {
+      files.push(...await walk(res));
+    } else {
+      files.push(res);
+    }
   }
+  return files;
+}
+
+async function optimizeFile(file) {
+  const ext = path.extname(file).toLowerCase();
+  if (!SUPPORTED_EXT.includes(ext)) return null;
+  if (ext === '.webp') return null; // already optimized
+
+  const relative = path.relative(ROOT, file);
+  const width = chooseWidthFor(relative);
+  const quality = 80;
+
+  const outPath = file.replace(ext, '.webp');
 
   try {
-    const info = await sharp(inputPath)
-      .resize(config.width, null, { 
-        fit: 'inside',
-        withoutEnlargement: true 
-      })
-      .webp({ quality: config.quality })
-      .toFile(outputPath);
+    // Skip if output exists and is newer than source
+    if (existsSync(outPath)) {
+      const [sStat, oStat] = await Promise.all([fs.stat(file), fs.stat(outPath)]);
+      if (oStat.mtimeMs >= sStat.mtimeMs) {
+        return { file: relative, skipped: true };
+      }
+    }
 
-    const originalSize = fs.statSync(inputPath).size;
-    const newSize = info.size;
-    const reduction = ((originalSize - newSize) / originalSize * 100).toFixed(1);
+    const buffer = await sharp(file)
+      .resize({ width, withoutEnlargement: true })
+      .webp({ quality })
+      .toBuffer();
 
-    console.log(`✅ ${config.input}`);
-    console.log(`   ${(originalSize / 1024).toFixed(0)} KB → ${(newSize / 1024).toFixed(0)} KB (-${reduction}%)`);
-  } catch (error) {
-    console.error(`❌ Error optimizing ${config.input}:`, error.message);
+    await fs.writeFile(outPath, buffer);
+
+    const origSize = (await fs.stat(file)).size;
+    const newSize = buffer.length;
+    const reduction = ((origSize - newSize) / origSize * 100).toFixed(1);
+
+    return { file: relative, origSize, newSize, reduction };
+  } catch (err) {
+    return { file: relative, error: err.message };
   }
 }
 
 async function main() {
-  console.log('🚀 Optimizando imágenes...\n');
-  
-  for (const config of imagesToOptimize) {
-    await optimizeImage(config);
+  console.log('🚀 Buscando imágenes en', ASSETS_DIR);
+  const files = await walk(ASSETS_DIR);
+  const imageFiles = files.filter(f => {
+    const e = path.extname(f).toLowerCase();
+    return ['.jpg', '.jpeg', '.png'].includes(e);
+  });
+
+  console.log(`Encontradas ${imageFiles.length} imágenes a procesar.`);
+
+  const results = [];
+  for (const file of imageFiles) {
+    process.stdout.write(`Optimizing ${path.relative(ROOT, file)}... `);
+    // eslint-disable-next-line no-await-in-loop
+    const res = await optimizeFile(file);
+    if (!res) {
+      console.log('skipped');
+      continue;
+    }
+    if (res.error) console.log(`❌ ${res.error}`);
+    else if (res.skipped) console.log('already up-to-date');
+    else console.log(`✅ ${(res.origSize/1024).toFixed(0)}KB → ${(res.newSize/1024).toFixed(0)}KB (-${res.reduction}%)`);
+    results.push(res);
   }
-  
-  console.log('\n✨ Optimización completada!');
+
+  console.log('\n✨ Optimización completada! Resumen:');
+  const success = results.filter(r => !r.error && !r.skipped).length;
+  const skipped = results.filter(r => r && r.skipped).length;
+  const failed = results.filter(r => r && r.error).length;
+  console.log(`  - Optimizadas: ${success}`);
+  console.log(`  - Omitidas (up-to-date): ${skipped}`);
+  console.log(`  - Errores: ${failed}`);
 }
 
-main();
+main().catch(err => {
+  console.error('Fatal:', err);
+});

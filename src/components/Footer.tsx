@@ -1,6 +1,6 @@
 import { memo, useMemo } from "react";
 import { MapPin, Phone, Mail, Clock } from "lucide-react";
-import logo from "@/assets/logo.png";
+import logo from "@/assets/logo.webp";
 import wolfLogo from "@/assets/logo-lobo.webp";
 import { FaFacebook, FaInstagram } from "react-icons/fa";
 
@@ -26,7 +26,7 @@ const Footer = memo(() => {
                 CLUB LA VICTORIA
               </span>
             </div>
-            <p className="font-inter text-background/80 mb-6 leading-relaxed">
+            <p className="font-inter text-background/90 mb-6 leading-relaxed">
               Entidad deportiva y social dedicada al desarrollo integral de
               nuestros socios desde 1944.
             </p>
@@ -58,15 +58,15 @@ const Footer = memo(() => {
               Contacto
             </h3>
             <ul className="space-y-4 font-inter">
-              <li className="flex gap-3 text-background/80 group">
+              <li className="flex gap-3 text-background/90 group">
                 <MapPin size={20} className="text-primary flex-shrink-0 mt-1 group-hover:scale-110 transition-transform" />
                 <span className="group-hover:text-background transition-colors">Libertad 1212, Villa Eloísa, Santa Fe</span>
               </li>
-              <li className="flex gap-3 text-background/80 group">
+              <li className="flex gap-3 text-background/90 group">
                 <Phone size={20} className="text-primary flex-shrink-0 group-hover:scale-110 transition-transform" />
                 <span className="group-hover:text-background transition-colors">3471 491199</span>
               </li>
-              <li className="flex gap-3 text-background/80 group">
+              <li className="flex gap-3 text-background/90 group">
                 <Mail size={20} className="text-primary flex-shrink-0 group-hover:scale-110 transition-transform" />
                 <span className="group-hover:text-background transition-colors">info@clublavictoria.com.ar</span>
               </li>
@@ -79,18 +79,18 @@ const Footer = memo(() => {
               Horarios
             </h3>
             <ul className="space-y-4 font-inter">
-              <li className="flex gap-3 text-background/80 group">
+              <li className="flex gap-3 text-background/90 group">
                 <Clock size={20} className="text-primary flex-shrink-0 group-hover:scale-110 transition-transform" />
                 <div>
                   <p className="font-semibold text-background group-hover:text-primary transition-colors">Lunes a Viernes</p>
-                  <p>8:00 - 22:00</p>
+                  <p className="text-background/90">8:00 - 22:00</p>
                 </div>
               </li>
-              <li className="flex gap-3 text-background/80 group">
+              <li className="flex gap-3 text-background/90 group">
                 <Clock size={20} className="text-primary flex-shrink-0 group-hover:scale-110 transition-transform" />
                 <div>
                   <p className="font-semibold text-background group-hover:text-primary transition-colors">Sábados y Domingos</p>
-                  <p>9:00 - 21:00</p>
+                  <p className="text-background/90">9:00 - 21:00</p>
                 </div>
               </li>
             </ul>

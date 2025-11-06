@@ -6,42 +6,81 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import tennisImg from "@/assets/tennis.webp";
-import padelImg from "@/assets/padel.webp";
-import poolImg from "@/assets/pool.webp";
-import gymImg from "@/assets/gym.webp";
-import heroBg from "@/assets/hero-bg.webp";
+import tennis1 from "@/assets/instalaciones/cancha-tenis/foto-1.webp";
+import tennis2 from "@/assets/instalaciones/cancha-tenis/foto-2.webp";
+import tennis3 from "@/assets/instalaciones/cancha-tenis/foto-3.webp";
+import padel1 from "@/assets/instalaciones/cancha-padel/foto-1.webp";
+import padel2 from "@/assets/instalaciones/cancha-padel/foto-2.webp";
+import padel3 from "@/assets/instalaciones/cancha-padel/foto-3.webp";
+import pileta1 from "@/assets/instalaciones/pileta/foto-1.webp";
+import pileta2 from "@/assets/instalaciones/pileta/foto-2.webp";
+import pileta3 from "@/assets/instalaciones/pileta/foto-3.webp";
+import pileta4 from "@/assets/instalaciones/pileta/foto-4.webp";
+// gym image removed: replaced by cancha de futbol images
+import futbol1 from "@/assets/instalaciones/futbol-5/foto-1.webp";
+import futbol2 from "@/assets/instalaciones/futbol-5/foto-2.webp";
+import futbol3 from "@/assets/instalaciones/futbol-5/foto-3.webp";
+import futbol4 from "@/assets/instalaciones/futbol-5/foto-4.webp";
+import futbol5 from "@/assets/instalaciones/futbol-5/foto-5.webp";
 import { useInView } from "@/hooks/use-in-view";
 
 const FACILITIES = [
   {
     title: "Canchas de Tenis",
-    image: tennisImg,
+    image: tennis1,
     description: "Canchas profesionales de polvo de ladrillo",
   },
   {
     title: "Canchas de Pádel",
-    image: padelImg,
+    image: padel1,
     description: "Instalaciones modernas con iluminación LED",
   },
   {
-    title: "Natatorio",
-    image: poolImg,
-    description: "Pileta olímpica climatizada",
+    title: "Pileta",
+    image: pileta1,
+    description: "Pileta olímpica",
   },
   {
-    title: "Gimnasio",
-    image: gymImg,
-    description: "Equipamiento de última generación",
+    title: "Cancha Fútbol 5",
+    image: futbol1,
+    description: "Cancha de fútbol 5 con césped sintético y luminarias",
   },
 ] as const;
 
-const GALLERY_IMAGES = [
-  { src: heroBg, alt: "Instalaciones del Club La Victoria", title: "Nuestras Instalaciones" },
-  { src: tennisImg, alt: "Cancha de Tenis", title: "Cancha de Tenis" },
-  { src: padelImg, alt: "Cancha de Pádel", title: "Cancha de Pádel" },
-  { src: poolImg, alt: "Piscina", title: "Piscina" },
-  { src: gymImg, alt: "Gimnasio", title: "Gimnasio" },
+// const GALLERY_IMAGES = [
+//   { src: heroBg, alt: "Instalaciones del Club La Victoria", title: "Nuestras Instalaciones" },
+//   { src: tennisImg, alt: "Cancha de Tenis", title: "Cancha de Tenis" },
+// ] as const;
+
+const EXTRA_FUTBOL_IMAGES = [
+  { src: futbol1, alt: "Cancha Fútbol 5 - 1", title: "Cancha Fútbol 5" },
+  { src: futbol2, alt: "Cancha Fútbol 5 - 2", title: "Cancha Fútbol 5" },
+  { src: futbol3, alt: "Cancha Fútbol 5 - 3", title: "Cancha Fútbol 5" },
+  { src: futbol4, alt: "Cancha Fútbol 5 - 4", title: "Cancha Fútbol 5" },
+  { src: futbol5, alt: "Cancha Fútbol 5 - 5", title: "Cancha Fútbol 5" },
+] as const;
+
+const EXTRA_PILETA_IMAGES = [
+  { src: pileta2, alt: "Piscina - 2", title: "Piscina" },
+  { src: pileta3, alt: "Piscina - 3", title: "Piscina" },
+  { src: pileta4, alt: "Piscina - 4", title: "Piscina" },
+] as const;
+
+const EXTRA_PADEL_IMAGES = [
+  { src: padel2, alt: "Cancha de Pádel - 2", title: "Cancha de Pádel" },
+  { src: padel3, alt: "Cancha de Pádel - 3", title: "Cancha de Pádel" },
+] as const;
+
+const EXTRA_TENNIS_IMAGES = [
+  { src: tennis2, alt: "Cancha de Tenis - 2", title: "Cancha de Tenis" },
+  { src: tennis3, alt: "Cancha de Tenis - 3", title: "Cancha de Tenis" },
+] as const;
+
+const UPDATED_GALLERY_IMAGES = [
+  ...EXTRA_FUTBOL_IMAGES,
+  ...EXTRA_PILETA_IMAGES,
+  ...EXTRA_PADEL_IMAGES,
+  ...EXTRA_TENNIS_IMAGES,
 ] as const;
 
 // Memoized Facility Thumbnail Component
@@ -170,19 +209,19 @@ const Facilities = memo(() => {
             className="w-full max-w-5xl mx-auto"
           >
             <CarouselContent>
-              {GALLERY_IMAGES.map((image, index) => (
-                <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
+              {UPDATED_GALLERY_IMAGES.map((image, index) => (
+                <CarouselItem key={index} className="md:basis-1/1 lg:basis-1/2">
                   <div className="p-2">
-                    <div className="relative overflow-hidden rounded-lg shadow-lg group">
-                      <img
-                        src={image.src}
-                        alt={image.alt}
-                        className="w-full h-[300px] object-cover transition-transform duration-500 group-hover:scale-110"
-                        loading="lazy"
-                        width="400"
-                        height="300"
-                        decoding="async"
-                      />
+                    <div className="relative overflow-hidden rounded-lg shadow-lg group aspect-video">
+                        <img
+                          src={image.src}
+                          alt={image.alt}
+                          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                          loading="lazy"
+                          width="800"
+                          height="420"
+                          decoding="async"
+                        />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
                         <h3 className="text-white font-semibold text-xl p-4">
                           {image.title}
@@ -193,8 +232,8 @@ const Facilities = memo(() => {
                 </CarouselItem>
               ))}
             </CarouselContent>
-            <CarouselPrevious className="left-0 -translate-x-1/2" />
-            <CarouselNext className="right-0 translate-x-1/2" />
+            <CarouselPrevious className="left-0 -translate-x-1/2 focus:ring-4 focus:ring-primary/50" aria-label="Ver imagen anterior de la galería" />
+            <CarouselNext className="right-0 translate-x-1/2 focus:ring-4 focus:ring-primary/50" aria-label="Ver siguiente imagen de la galería" />
           </Carousel>
         </div>
       </div>

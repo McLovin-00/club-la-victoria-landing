@@ -65,14 +65,18 @@ const Contact = memo(() => {
     message: "",
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const { ref, isInView } = useInView();
 
-  const handleSubmit = useCallback((e: React.FormEvent) => {
+  const handleSubmit = useCallback(async (e: React.FormEvent) => {
     e.preventDefault();
+    setIsSubmitting(true);
 
     try {
       contactSchema.parse(formData);
       setErrors({});
+      // Simulate API call
+      await new Promise(resolve => setTimeout(resolve, 1000));
       toast.success("Mensaje enviado correctamente. Nos contactaremos pronto!");
       setFormData({ name: "", email: "", message: "" });
     } catch (error) {
@@ -85,6 +89,8 @@ const Contact = memo(() => {
         });
         setErrors(newErrors);
       }
+    } finally {
+      setIsSubmitting(false);
     }
   }, [formData]);
 
@@ -147,9 +153,13 @@ const Contact = memo(() => {
                       placeholder="Tu nombre completo"
                       className={`transition-all ${errors.name ? "border-destructive" : "focus:border-primary"}`}
                       maxLength={100}
+                      aria-required="true"
+                      aria-invalid={errors.name ? "true" : "false"}
+                      aria-describedby={errors.name ? "name-error" : undefined}
+                      disabled={isSubmitting}
                     />
                     {errors.name && (
-                      <p className="text-destructive text-sm mt-1 animate-fade-in">{errors.name}</p>
+                      <p id="name-error" className="text-destructive text-sm mt-1 animate-fade-in" role="alert">{errors.name}</p>
                     )}
                   </div>
 
@@ -169,9 +179,13 @@ const Contact = memo(() => {
                       placeholder="tu@email.com"
                       className={`transition-all ${errors.email ? "border-destructive" : "focus:border-primary"}`}
                       maxLength={255}
+                      aria-required="true"
+                      aria-invalid={errors.email ? "true" : "false"}
+                      aria-describedby={errors.email ? "email-error" : undefined}
+                      disabled={isSubmitting}
                     />
                     {errors.email && (
-                      <p className="text-destructive text-sm mt-1 animate-fade-in">{errors.email}</p>
+                      <p id="email-error" className="text-destructive text-sm mt-1 animate-fade-in" role="alert">{errors.email}</p>
                     )}
                   </div>
 
@@ -191,9 +205,13 @@ const Contact = memo(() => {
                       rows={6}
                       className={`transition-all ${errors.message ? "border-destructive" : "focus:border-primary"}`}
                       maxLength={1000}
+                      aria-required="true"
+                      aria-invalid={errors.message ? "true" : "false"}
+                      aria-describedby={errors.message ? "message-error" : undefined}
+                      disabled={isSubmitting}
                     />
                     {errors.message && (
-                      <p className="text-destructive text-sm mt-1 animate-fade-in">
+                      <p id="message-error" className="text-destructive text-sm mt-1 animate-fade-in" role="alert">
                         {errors.message}
                       </p>
                     )}
@@ -202,8 +220,10 @@ const Contact = memo(() => {
                   <Button
                     type="submit"
                     className="w-full bg-gradient-to-r from-primary to-primary/90 hover:from-primary/90 hover:to-primary font-montserrat font-semibold text-lg py-6 shadow-lg hover:shadow-xl transition-all duration-300"
+                    disabled={isSubmitting}
+                    aria-busy={isSubmitting}
                   >
-                    Enviar Mensaje
+                    {isSubmitting ? "Enviando..." : "Enviar Mensaje"}
                   </Button>
                 </form>
               </CardContent>

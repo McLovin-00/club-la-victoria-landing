@@ -1,14 +1,9 @@
-User-agent: Googlebot
-Allow: /
-
-User-agent: Bingbot
-Allow: /
-
-User-agent: Twitterbot
-Allow: /
-
-User-agent: facebookexternalhit
-Allow: /
-
 User-agent: *
 Allow: /
+Crawl-delay: 1
+
+# Block specific bots if needed
+User-agent: AhrefsBot
+Crawl-delay: 10
+
+Sitemap: https://clublavictoria.com.ar/sitemap.xml

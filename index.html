@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es-AR">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -37,6 +37,10 @@
   <!-- Resource hints for better performance -->
   <link rel="modulepreload" href="/src/main.tsx" />
 
+  <!-- Preload critical images -->
+  <link rel="preload" as="image" href="/src/assets/hero-bg4.webp" fetchpriority="high" />
+  <link rel="preload" as="image" href="/src/assets/logo.webp" fetchpriority="high" />
+
   <!-- Favicon: usar el logo local en assets (añadimos versión para bust cache) -->
   <link rel="icon" href="/logo.png" sizes="32x24" type="image/png" />
   <link rel="shortcut icon" sizes="32x24" href="/logo.png" />
@@ -59,6 +63,64 @@
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:site" content="@clublavictoria" />
     <meta name="twitter:image" content="/assets/logo.png" />
+    <meta name="twitter:title" content="Club La Victoria | Entidad Deportiva y Social" />
+    <meta name="twitter:description" content="Club de Cazadores La Victoria - Entidad deportiva y social fundada en 1944." />
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://clublavictoria.com.ar/" />
+
+    <!-- Additional OG tags -->
+    <meta property="og:url" content="https://clublavictoria.com.ar/" />
+    <meta property="og:locale" content="es_AR" />
+
+    <!-- Language alternates -->
+    <link rel="alternate" hreflang="es-ar" href="https://clublavictoria.com.ar/" />
+    <link rel="alternate" hreflang="x-default" href="https://clublavictoria.com.ar/" />
+
+    <!-- Structured Data (JSON-LD) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SportsActivityLocation",
+      "name": "Club de Cazadores La Victoria",
+      "image": "https://clublavictoria.com.ar/assets/logo.webp",
+      "@id": "https://clublavictoria.com.ar",
+      "url": "https://clublavictoria.com.ar",
+      "telephone": "+54-3471-491199",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Libertad 1212",
+        "addressLocality": "Villa Eloísa",
+        "addressRegion": "Santa Fe",
+        "postalCode": "2347",
+        "addressCountry": "AR"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": -32.959997,
+        "longitude": -61.544320
+      },
+      "openingHoursSpecification": [
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+          "opens": "08:00",
+          "closes": "22:00"
+        },
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": ["Saturday", "Sunday"],
+          "opens": "09:00",
+          "closes": "21:00"
+        }
+      ],
+      "sameAs": [
+        "https://www.facebook.com/profile.php?id=100071167026592",
+        "https://www.instagram.com/clublavictoria_/"
+      ],
+      "foundingDate": "1944-09-04"
+    }
+    </script>
   </head>
 
   <body>
