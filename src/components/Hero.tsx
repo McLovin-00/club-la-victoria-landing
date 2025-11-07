@@ -1,8 +1,8 @@
 import { memo, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import { ChevronDown } from "lucide-react";
-import heroBg from "@/assets/hero-bg4.webp";
 import logo from "@/assets/logo.webp";
+import heroBg from "@/assets/image.jpeg";
 
 const Hero = memo(() => {
   const scrollToActivities = useCallback(() => {
@@ -24,8 +24,9 @@ const Hero = memo(() => {
       <div
         className="absolute inset-0 bg-cover bg-center"
         style={{
-          backgroundImage: `linear-gradient(135deg, rgba(22, 163, 74, 0.55), rgba(22, 163, 74, 0.28)), url(${heroBg})`,
+          backgroundImage: `linear-gradient(135deg, rgba(22, 163, 74, 0.55), rgba(22, 163, 74, 0.28)), url(https://res.cloudinary.com/duvoj0yeh/image/upload/v1762543275/hero-bg4_upscayl_16x_upscayl-standard-4x_bdwvur_b1xkkc.webp)`,
           backgroundRepeat: 'no-repeat',
+          filter: 'blur(4px)',
         }}
       />
       

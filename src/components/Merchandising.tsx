@@ -58,7 +58,7 @@ const GALLERY_IMAGES = [
   { image: fotoGorras4, alt: "Productos oficiales del club" },
 ] as const;
 
-const PHONE_NUMBER = "3471491199";
+const PHONE_NUMBER = "3471 491199";
 
 // Memoized Product Card
 const ProductCard = memo(({ product, index, isInView }: {
