@@ -10,6 +10,7 @@ import mascota from "@/assets/mascota.webp";
 import iconCanchaFutbol from "@/assets/actividades/icono-cancha-futbol-5-green.webp";
 import iconCanchaPaddle1 from "@/assets/actividades/icono-cancha-paddle-green.webp";
 import iconCanchaPaddle2 from "@/assets/actividades/icono-cancha-paddle-green.webp";
+import iconCanchaPaddleCerrado from "@/assets/actividades/icono-cancha-paddle-green.webp";
 import iconCanchaTenis from "@/assets/actividades/icono-cancha-tenis-green.webp";
 import iconSalon from "@/assets/actividades/icono-salon-green.webp";
 import iconQuincho from "@/assets/actividades/icono-salon-green.webp";
@@ -31,6 +32,12 @@ const ACTIVITIES = [
     icon: iconCanchaPaddle2,
     title: "Pádel sobre cemento",
     description: "Canchas de pádel con superficie de cemento, perfectas para entrenamientos intensivos.",
+    color: "text-primary",
+  },
+  {
+    icon: iconCanchaPaddleCerrado,
+    title: "Pádel cerrado",
+    description: "Canchas de pádel techadas para jugar con total comodidad sin importar el clima.",
     color: "text-primary",
   },
   {
