@@ -9,6 +9,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
+import { Loader2 } from "lucide-react";
 import { z } from "zod";
 
 const dniSchema = z.object({
@@ -23,13 +24,11 @@ const dniSchema = z.object({
 interface ReservationModalProps {
   isOpen: boolean;
   onClose: () => void;
-  activityTitle: string;
 }
 
 const ReservationModal = memo(({
   isOpen,
   onClose,
-  activityTitle,
 }: ReservationModalProps) => {
   const [dni, setDni] = useState("");
   const [error, setError] = useState("");
@@ -115,71 +114,74 @@ const ReservationModal = memo(({
 
   return (
     <Dialog open={isOpen} onOpenChange={handleClose}>
-      <DialogContent className="w-[97.5%] sm:max-w-md">
-        <DialogHeader>
+      <DialogContent className="max-h-[calc(100dvh-2rem)] w-[calc(100%-2rem)] max-w-md overflow-y-auto overscroll-contain p-5 sm:p-6">
+        <DialogHeader className="pr-6">
           <DialogTitle className="font-montserrat text-2xl">
-            Reservar {activityTitle}
+            Ingresá tu DNI
           </DialogTitle>
-          <DialogDescription className="font-inter">
-            Ingresá tu DNI para continuar con la reserva
+          <DialogDescription className="font-inter leading-relaxed">
+            Validá tu membresía para continuar al turnero, donde vas a elegir el espacio, el día y el horario.
           </DialogDescription>
         </DialogHeader>
-        <form onSubmit={handleSubmit} className="space-y-6">
+
+        <p className="rounded-lg bg-muted px-3.5 py-3 font-inter text-sm leading-relaxed text-foreground">
+          La reserva está disponible para socios con la cuota societaria al día.
+        </p>
+
+        <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label
               htmlFor="dni"
-              className="font-inter font-medium text-sm mb-2 block"
+              className="mb-2 block font-inter text-sm font-medium"
             >
-              DNI *
+              Número de DNI
             </label>
             <Input
               id="dni"
               type="text"
+              inputMode="numeric"
               value={dni}
               onChange={handleChange}
-              placeholder="Ej: 12345678"
+              placeholder="Ej.: 12345678"
               className={error ? "border-destructive" : ""}
               aria-invalid={!!error}
+              aria-describedby={error ? "dni-help dni-error" : "dni-help"}
               maxLength={8}
               autoFocus
             />
+            <p id="dni-help" className="mt-1.5 font-inter text-xs leading-relaxed text-muted-foreground">
+              Ingresá los 7 u 8 números de tu documento.
+            </p>
             {error && (
-              <p className="text-destructive text-sm mt-1">{error}</p>
+              <p id="dni-error" role="alert" className="mt-1.5 font-inter text-sm text-destructive">
+                {error}
+              </p>
             )}
           </div>
 
-          <div className="flex gap-3">
-            <Button
-              type="button"
-              variant="outline"
-              onClick={handleClose}
-              className="flex-1 border-destructive text-destructive hover:bg-destructive hover:text-white font-montserrat font-semibold transition-colors"
-              disabled={isSubmitting}
-            >
-              Cancelar
-            </Button>
+          <div className="flex flex-col gap-2 sm:flex-row sm:gap-3">
             <Button
               type="submit"
-              className="flex-1 bg-primary hover:bg-primary/90 font-montserrat font-semibold flex items-center justify-center"
+              className="min-h-12 flex-1 bg-[#14532d] font-montserrat font-semibold text-white hover:bg-[#166534]"
               disabled={isSubmitting}
             >
               {isSubmitting ? (
                 <>
-                  <svg
-                    className="animate-spin h-5 w-5 mr-2 text-white"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    aria-hidden="true"
-                  >
-                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
-                  </svg>
-                  Cargando...
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" aria-hidden="true" />
+                  Validando...
                 </>
               ) : (
-                "Continuar"
+                "Continuar al turnero"
               )}
+            </Button>
+            <Button
+              type="button"
+              variant="outline"
+              onClick={handleClose}
+              className="min-h-12 flex-1 font-montserrat font-semibold"
+              disabled={isSubmitting}
+            >
+              Cancelar
             </Button>
           </div>
         </form>

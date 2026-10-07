@@ -1,4 +1,5 @@
-import { lazy, Suspense } from "react";
+import { lazy, Suspense, useEffect, useRef, useState } from "react";
+import type { ReactNode } from "react";
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import About from "@/components/About";
@@ -16,6 +17,60 @@ const LoadingFallback = () => (
     <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin" />
   </div>
 );
+
+const DeferredSection = ({
+  children,
+  id,
+}: {
+  children: ReactNode;
+  id?: string;
+}) => {
+  const [shouldLoad, setShouldLoad] = useState(false);
+  const placeholderRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const placeholder = placeholderRef.current;
+    if (!placeholder) return;
+
+    if (typeof IntersectionObserver === "undefined") {
+      setShouldLoad(true);
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((entry) => entry.isIntersecting)) {
+          setShouldLoad(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: "100px 0px" },
+    );
+
+    observer.observe(placeholder);
+    return () => observer.disconnect();
+  }, []);
+
+  if (!shouldLoad) {
+    return (
+      <div id={id} ref={placeholderRef} aria-busy="true" className={id === "actividades" ? "scroll-mt-24" : undefined}>
+        <LoadingFallback />
+      </div>
+    );
+  }
+
+  return (
+    <Suspense
+      fallback={
+        <div id={id} aria-busy="true" className={id === "actividades" ? "scroll-mt-24" : undefined}>
+          <LoadingFallback />
+        </div>
+      }
+    >
+      {children}
+    </Suspense>
+  );
+};
 
 const Index = () => {
   return (
@@ -39,17 +94,23 @@ const Index = () => {
         <Hero />
         <About />
 
-        <Suspense fallback={<LoadingFallback />}>
+        <DeferredSection id="actividades">
           <Activities />
+        </DeferredSection>
+        <DeferredSection id="instalaciones">
           <Facilities />
+        </DeferredSection>
+        <DeferredSection id="merchandising">
           <Merchandising />
+        </DeferredSection>
+        <DeferredSection id="contacto">
           <Contact />
-        </Suspense>
+        </DeferredSection>
       </main>
 
-      <Suspense fallback={<LoadingFallback />}>
+      <DeferredSection>
         <Footer />
-      </Suspense>
+      </DeferredSection>
     </div>
   );
 };

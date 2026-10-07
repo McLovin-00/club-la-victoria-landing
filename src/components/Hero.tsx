@@ -2,7 +2,9 @@ import { memo, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import { ChevronDown } from "lucide-react";
 import logo from "@/assets/logo.webp";
-import heroBg from "@/assets/image.jpeg";
+
+const heroBackgroundUrl =
+  "https://res.cloudinary.com/duvoj0yeh/image/upload/f_auto,q_auto,w_1920,c_limit/v1762543275/hero-bg4_upscayl_16x_upscayl-standard-4x_bdwvur_b1xkkc.webp";
 
 const Hero = memo(() => {
   const scrollToActivities = useCallback(() => {
@@ -24,9 +26,9 @@ const Hero = memo(() => {
       <div
         className="absolute inset-0 bg-cover bg-center"
         style={{
-          backgroundImage: `linear-gradient(135deg, rgba(22, 163, 74, 0.55), rgba(22, 163, 74, 0.28)), url(https://res.cloudinary.com/duvoj0yeh/image/upload/v1762543275/hero-bg4_upscayl_16x_upscayl-standard-4x_bdwvur_b1xkkc.webp)`,
-          backgroundRepeat: 'no-repeat',
-          filter: 'blur(4px)',
+          backgroundImage: `linear-gradient(135deg, rgba(22, 163, 74, 0.55), rgba(22, 163, 74, 0.28)), url(${heroBackgroundUrl})`,
+          backgroundRepeat: "no-repeat",
+          filter: "blur(4px)",
         }}
       />
       
@@ -65,7 +67,7 @@ const Hero = memo(() => {
             className="bg-secondary hover:bg-secondary/90 text-white font-montserrat font-bold text-lg px-8 py-6 shadow-2xl transform-gpu transition-transform duration-200 ease-out hover:-translate-y-1 hover:scale-105 active:scale-95 focus:outline-none focus:ring-4 focus:ring-secondary/30 motion-safe:animate-fade-in-up"
             onClick={scrollToActivities}
           >
-            Reservar Ahora
+            Ir a reservas
           </Button>
           <Button
             size="lg"

@@ -37,9 +37,8 @@
   <!-- Resource hints for better performance -->
   <link rel="modulepreload" href="/src/main.tsx" />
 
-  <!-- Preload critical images -->
-  <link rel="preload" as="image" href="/src/assets/hero-bg4.webp" fetchpriority="high" />
-  <link rel="preload" as="image" href="/src/assets/logo.webp" fetchpriority="high" />
+  <!-- Preload the optimized hero background used by the Hero component. -->
+  <link rel="preload" as="image" href="https://res.cloudinary.com/duvoj0yeh/image/upload/f_auto,q_auto,w_1920,c_limit/v1762543275/hero-bg4_upscayl_16x_upscayl-standard-4x_bdwvur_b1xkkc.webp" fetchpriority="high" />
 
   <!-- Favicon: usar el logo local en assets (añadimos versión para bust cache) -->
   <link rel="icon" href="/logo.png" sizes="32x24" type="image/png" />

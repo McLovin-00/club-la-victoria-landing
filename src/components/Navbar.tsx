@@ -129,7 +129,7 @@ const Navbar = memo(() => {
               className="bg-secondary hover:bg-secondary/90 text-white font-montserrat font-semibold shadow-lg transform-gpu transition-transform duration-200 ease-out hover:-translate-y-1 hover:scale-105 active:scale-95 focus:outline-none focus:ring-4 focus:ring-secondary/30"
               onClick={handleReserveClick}
             >
-              Reservar
+              Ir a reservas
             </Button>
             <Button
               variant="outline"
@@ -173,7 +173,7 @@ const Navbar = memo(() => {
               className="w-full mt-4 bg-secondary hover:bg-secondary/90 text-white font-montserrat font-semibold shadow-lg transform-gpu transition-transform duration-200 ease-out hover:-translate-y-1 hover:scale-105 active:scale-95 focus:outline-none focus:ring-4 focus:ring-secondary/30"
               onClick={handleReserveClick}
             >
-              Reservar
+              Ir a reservas
             </Button>
             <Button
               variant="outline"
