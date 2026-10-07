@@ -106,11 +106,11 @@ const Activities = memo(() => {
               <ol className="mt-5 space-y-3 font-inter text-sm leading-relaxed text-white/90 sm:text-base">
                 <li className="flex items-start gap-3">
                   <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-white/15 text-xs font-bold text-white" aria-hidden="true">1</span>
-                  <span>Ingresá tu DNI.</span>
+                  <span>Ingresá tu DNI para validar que seas socio.</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-white/15 text-xs font-bold text-white" aria-hidden="true">2</span>
-                  <span>Elegí espacio, día y horario en el turnero.</span>
+                  <span>Te redirigimos al turnero externo para elegir el espacio, día y horario.</span>
                 </li>
               </ol>
 

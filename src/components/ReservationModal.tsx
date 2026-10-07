@@ -178,7 +178,7 @@ const ReservationModal = memo(({
               type="button"
               variant="outline"
               onClick={handleClose}
-              className="min-h-12 flex-1 font-montserrat font-semibold"
+              className="min-h-12 flex-1 font-montserrat font-semibold hover:border-destructive hover:bg-destructive hover:text-white transition-colors"
               disabled={isSubmitting}
             >
               Cancelar
